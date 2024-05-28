@@ -1,0 +1,24 @@
+.rawmarksInput {
+    display: flex;
+}
+
+input {
+    width: 50px;
+}
+
+.subject1 .inputs, 
+.subject2 .inputs, 
+.subject3 .inputs, 
+.subject4 .inputs,
+.subject5 .inputs, 
+.subject6 .inputs {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    grid-template-rows: 1fr 1fr 1fr 1fr;
+}
+
+
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+-webkit-appearance: none;
+}
