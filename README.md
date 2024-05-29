@@ -1,1 +1,1 @@
-To use, head to [Atar Calculator](/saysayyyy07.github.io/atarcalculator/) (still in beta).
+To use, click [here](https://saysayyyy07.github.io/atarcalculator/) (note: still in beta).
