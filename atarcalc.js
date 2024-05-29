@@ -14,6 +14,8 @@ const subj6Name = document.querySelector(".subject6 .subjectName");
 
 const firstNumInput = document.querySelector("#firstNum");
 const secondNumInput = document.querySelector("#secondNum");
+const rawInputs = document.querySelectorAll("input #raw");
+const weightInputs = document.querySelectorAll("#weight");
 const userInputs = document.querySelectorAll("input");
 const displayWAM = document.querySelectorAll(".wam")
 
@@ -21,7 +23,7 @@ let firstNum = 0;
 let secondNum = 0;
 
 
-const rawMarks = {
+let rawMarks = {
     "sub1": {
         "assessments": { 
         "ass1": 0,
@@ -67,7 +69,7 @@ const rawMarks = {
     },
 }
 
-const weighting = {
+let weighting = {
     "sub1": {
         "assessments": { 
             "ass1": 0,
@@ -113,7 +115,7 @@ const weighting = {
     },
 }
 
-const WAM = {
+let WAM = {
     "sub1": 0,
     "sub2": 0,
     "sub3": 0,
@@ -134,6 +136,40 @@ const subjects = [
 ""
 ] 
 
+
+
+console.log(localStorage);
+
+window.onload = function populateInputs() {
+    WAM = JSON.parse(localStorage.getItem("storedWAM"))
+    let raw = JSON.parse(localStorage.getItem("storedRawMarks"));
+    rawMarks = raw;
+    let weight = JSON.parse(localStorage.getItem("storedWeighting"));
+    weighting = weight;
+    for (let subNum=1; subNum <= 6; subNum++) {
+        displayWAMValue(subNum);
+        for (let assNum=1; assNum <= 4; assNum++) {
+            if (raw[`sub${subNum}`] && raw[`sub${subNum}`]["assessments"] && raw[`sub${subNum}`]["assessments"][`ass${assNum}`]) {
+            document.getElementById(`subject${subNum} raw ass${assNum}`).value = raw["sub" + subNum]["assessments"]["ass" + assNum];
+            }
+            if (weight[`sub${subNum}`] && weight[`sub${subNum}`]["assessments"] && weight[`sub${subNum}`]["assessments"][`ass${assNum}`]) {
+            document.getElementById(`subject${subNum} weight ass${assNum}`).value = weight["sub" + subNum]["assessments"]["ass" + assNum];
+            }
+        }
+    }
+}
+
+
+function setInputsinLocalStorage(subNum, assNum) {
+    localStorage.setItem("storedRawMarks", JSON.stringify(rawMarks));
+    localStorage.setItem("storedWeighting", JSON.stringify(weighting));
+}
+
+
+function setWAMinLocalStorage() {
+    localStorage.setItem("storedWAM", JSON.stringify(WAM));
+    storedWAM = localStorage.getItem("storedWAM")
+}
 
 function nanRemover() {
     for (let i=0; i < 6; i++) {
@@ -164,19 +200,19 @@ function getWeightedAverage(){
         + rawMarks[`sub${i}`]["assessments"]["ass3"]*weighting[`sub${i}`]["assessments"]["ass3"]
         + rawMarks[`sub${i}`]["assessments"]["ass4"]*weighting[`sub${i}`]["assessments"]["ass4"]) 
         / (weighting[`sub${i}`]["assessments"]["ass1"] + weighting[`sub${i}`]["assessments"]["ass2"] 
-        + weighting[`sub${i}`]["assessments"]["ass3"] + weighting[`sub${i}`]["assessments"]["ass4"])
+        + weighting[`sub${i}`]["assessments"]["ass3"] + weighting[`sub${i}`]["assessments"]["ass4"]);
         displayWAMValue(i);
     }
+    setWAMinLocalStorage();
+    setInputsinLocalStorage();
 }
 
 function storeInput(userInput) {
     userInputId = userInput.target.getAttribute("id");
     userInputValue = parseInt(userInput.srcElement.value);
-
-
-
-        if (userInputId.includes("raw")) {
-            for (let i=1; i <= 6; i++) {
+    console.log("userinput for this box " + userInputId)
+    if (userInputId.includes("raw")) {
+        for (let i=1; i <= 6; i++) {
                 for (let j=1; j <= 4; j++) {
                     if (userInputId.includes(`ass${j}`)) {
                         if (userInput.srcElement.parentNode.parentNode.classList.contains(`subject${i}`)) {
@@ -185,8 +221,9 @@ function storeInput(userInput) {
                                 rawMarks[`sub${i}`]["assessments"][`ass${j}`] = userInputValue;
                             }
                         }
-    
                     }
+                getWeightedAverage(i, j);
+                nanRemover();
                 }
             }   
     
@@ -202,18 +239,17 @@ function storeInput(userInput) {
                         }
     
                     }
+                getWeightedAverage(i, j);
+                nanRemover();
                 }
             }
         }
         else console.log("ERROR, not raw or weight");
-    getWeightedAverage();
-    nanRemover();
     }
 
 function addKeyListener() {
     for (i = 0; i < userInputs.length; i++) {
         userInputs[i].addEventListener("keyup", (e) => {
-            console.log(e.key)
             if (invalidChars.includes(e.key)) e.preventDefault;
             else storeInput(e);
         })
