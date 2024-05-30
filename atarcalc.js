@@ -140,21 +140,25 @@ const subjects = [
 console.log(localStorage)
 
 window.onload = function populateInputs() {
-    // setWAMinLocalStorage();
-    // setInputsinLocalStorage();
-    WAM = JSON.parse(localStorage.getItem("storedWAM"))
-    let raw = JSON.parse(localStorage.getItem("storedRawMarks"));
-    rawMarks = raw;
-    let weight = JSON.parse(localStorage.getItem("storedWeighting"));
-    weighting = weight;
-    for (let subNum=1; subNum <= 6; subNum++) {
-        displayWAMValue(subNum);
-        for (let assNum=1; assNum <= 4; assNum++) {
-            if (raw[`sub${subNum}`] && raw[`sub${subNum}`]["assessments"] && raw[`sub${subNum}`]["assessments"][`ass${assNum}`]) {
-            document.getElementById(`subject${subNum} raw ass${assNum}`).value = raw["sub" + subNum]["assessments"]["ass" + assNum];
-            }
-            if (weight[`sub${subNum}`] && weight[`sub${subNum}`]["assessments"] && weight[`sub${subNum}`]["assessments"][`ass${assNum}`]) {
-            document.getElementById(`subject${subNum} weight ass${assNum}`).value = weight["sub" + subNum]["assessments"]["ass" + assNum];
+    if (JSON.parse(localStorage.getItem("storedWAM")) = null) //do nothing;
+    if (JSON.parse(localStorage.getItem("storedRawMarks")) = null) //do nothing;
+    if (JSON.parse(localStorage.getItem("storedWeighting")) = null) ;
+    else {
+        WAM = JSON.parse(localStorage.getItem("storedWAM"));
+        let raw = JSON.parse(localStorage.getItem("storedRawMarks"));
+        rawMarks = raw;
+        let weight = JSON.parse(localStorage.getItem("storedWeighting"));
+        weighting = weight;
+
+        for (let subNum=1; subNum <= 6; subNum++) {
+            displayWAMValue(subNum);
+            for (let assNum=1; assNum <= 4; assNum++) {
+                if (raw[`sub${subNum}`] && raw[`sub${subNum}`]["assessments"] && raw[`sub${subNum}`]["assessments"][`ass${assNum}`]) {
+                document.getElementById(`subject${subNum} raw ass${assNum}`).value = raw["sub" + subNum]["assessments"]["ass" + assNum];
+                }
+                if (weight[`sub${subNum}`] && weight[`sub${subNum}`]["assessments"] && weight[`sub${subNum}`]["assessments"][`ass${assNum}`]) {
+                document.getElementById(`subject${subNum} weight ass${assNum}`).value = weight["sub" + subNum]["assessments"]["ass" + assNum];
+                }
             }
         }
     }
@@ -204,19 +208,11 @@ function getWeightedAverage(i){
         / parseInt(weighting[`sub${i}`]["assessments"]["ass1"] + weighting[`sub${i}`]["assessments"]["ass2"] 
         + weighting[`sub${i}`]["assessments"]["ass3"] + weighting[`sub${i}`]["assessments"]["ass4"]));
     displayWAMValue(i);
-
-    console.log(`WAM${i}: ` + parseInt(
-        rawMarks[`sub${i}`]["assessments"]["ass1"]*weighting[`sub${i}`]["assessments"]["ass1"]
-        + rawMarks[`sub${i}`]["assessments"]["ass2"]*weighting[`sub${i}`]["assessments"]["ass2"]
-        + rawMarks[`sub${i}`]["assessments"]["ass3"]*weighting[`sub${i}`]["assessments"]["ass3"]
-        + rawMarks[`sub${i}`]["assessments"]["ass4"]*weighting[`sub${i}`]["assessments"]["ass4"])
-        / parseInt(weighting[`sub${i}`]["assessments"]["ass1"] + weighting[`sub${i}`]["assessments"]["ass2"] 
-        + weighting[`sub${i}`]["assessments"]["ass3"] + weighting[`sub${i}`]["assessments"]["ass4"]))
-    console.log(WAM[`sub${i}`]);
-
     setWAMinLocalStorage();
     setInputsinLocalStorage();
 }
+
+console.log(rawMarks)
 
 function storeInput(userInput) {
     userInputId = userInput.target.getAttribute("id");
@@ -228,6 +224,7 @@ function storeInput(userInput) {
                         if (userInput.srcElement.parentNode.parentNode.classList.contains(`subject${i}`)) {
                             if (userInputValue < 0 || userInputValue > 100) alert("please input a number from 0 to 100");
                             else {
+                                console.log(rawMarks["sub1"])
                                 rawMarks[`sub${i}`]["assessments"][`ass${j}`] = userInputValue;
                             }
                         }
