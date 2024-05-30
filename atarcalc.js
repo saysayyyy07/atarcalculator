@@ -137,10 +137,11 @@ const subjects = [
 ] 
 
 
-
-console.log(localStorage);
+console.log(localStorage)
 
 window.onload = function populateInputs() {
+    // setWAMinLocalStorage();
+    // setInputsinLocalStorage();
     WAM = JSON.parse(localStorage.getItem("storedWAM"))
     let raw = JSON.parse(localStorage.getItem("storedRawMarks"));
     rawMarks = raw;
@@ -160,7 +161,7 @@ window.onload = function populateInputs() {
 }
 
 
-function setInputsinLocalStorage(subNum, assNum) {
+function setInputsinLocalStorage() {
     localStorage.setItem("storedRawMarks", JSON.stringify(rawMarks));
     localStorage.setItem("storedWeighting", JSON.stringify(weighting));
 }
@@ -186,23 +187,33 @@ function roundDisplay() {
 }
 
 function displayWAMValue(subject) {
+
     if (displayWAM[subject-1].parentNode.classList.contains(`subject${subject}`)) {
         roundDisplay();
         displayWAM[subject-1].innerHTML = "WAM: " + WAM[`sub${subject}`];
     }
 }
 
-function getWeightedAverage(){
-    for (let i=1; i <=6; i++) {
-        WAM[`sub${i}`] = 
-          (rawMarks[`sub${i}`]["assessments"]["ass1"]*weighting[`sub${i}`]["assessments"]["ass1"]
+function getWeightedAverage(i){
+    WAM[`sub${i}`] = 
+    (parseInt(
+        rawMarks[`sub${i}`]["assessments"]["ass1"]*weighting[`sub${i}`]["assessments"]["ass1"]
         + rawMarks[`sub${i}`]["assessments"]["ass2"]*weighting[`sub${i}`]["assessments"]["ass2"]
         + rawMarks[`sub${i}`]["assessments"]["ass3"]*weighting[`sub${i}`]["assessments"]["ass3"]
-        + rawMarks[`sub${i}`]["assessments"]["ass4"]*weighting[`sub${i}`]["assessments"]["ass4"]) 
-        / (weighting[`sub${i}`]["assessments"]["ass1"] + weighting[`sub${i}`]["assessments"]["ass2"] 
-        + weighting[`sub${i}`]["assessments"]["ass3"] + weighting[`sub${i}`]["assessments"]["ass4"]);
-        displayWAMValue(i);
-    }
+        + rawMarks[`sub${i}`]["assessments"]["ass4"]*weighting[`sub${i}`]["assessments"]["ass4"])
+        / parseInt(weighting[`sub${i}`]["assessments"]["ass1"] + weighting[`sub${i}`]["assessments"]["ass2"] 
+        + weighting[`sub${i}`]["assessments"]["ass3"] + weighting[`sub${i}`]["assessments"]["ass4"]));
+    displayWAMValue(i);
+
+    console.log(`WAM${i}: ` + parseInt(
+        rawMarks[`sub${i}`]["assessments"]["ass1"]*weighting[`sub${i}`]["assessments"]["ass1"]
+        + rawMarks[`sub${i}`]["assessments"]["ass2"]*weighting[`sub${i}`]["assessments"]["ass2"]
+        + rawMarks[`sub${i}`]["assessments"]["ass3"]*weighting[`sub${i}`]["assessments"]["ass3"]
+        + rawMarks[`sub${i}`]["assessments"]["ass4"]*weighting[`sub${i}`]["assessments"]["ass4"])
+        / parseInt(weighting[`sub${i}`]["assessments"]["ass1"] + weighting[`sub${i}`]["assessments"]["ass2"] 
+        + weighting[`sub${i}`]["assessments"]["ass3"] + weighting[`sub${i}`]["assessments"]["ass4"]))
+    console.log(WAM[`sub${i}`]);
+
     setWAMinLocalStorage();
     setInputsinLocalStorage();
 }
@@ -210,7 +221,6 @@ function getWeightedAverage(){
 function storeInput(userInput) {
     userInputId = userInput.target.getAttribute("id");
     userInputValue = parseInt(userInput.srcElement.value);
-    console.log("userinput for this box " + userInputId)
     if (userInputId.includes("raw")) {
         for (let i=1; i <= 6; i++) {
                 for (let j=1; j <= 4; j++) {
@@ -222,9 +232,9 @@ function storeInput(userInput) {
                             }
                         }
                     }
-                getWeightedAverage(i, j);
-                nanRemover();
                 }
+                getWeightedAverage(i);
+                nanRemover();
             }   
     
         } else if (userInputId.includes("weight")) {
@@ -239,7 +249,7 @@ function storeInput(userInput) {
                         }
     
                     }
-                getWeightedAverage(i, j);
+                getWeightedAverage(i);
                 nanRemover();
                 }
             }
