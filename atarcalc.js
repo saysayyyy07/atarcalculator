@@ -137,12 +137,12 @@ const subjects = [
 ] 
 
 
-console.log(localStorage)
+console.log(localStorage.getItem("storedWAM"))
 
 window.onload = function populateInputs() {
-    if (JSON.parse(localStorage.getItem("storedWAM")) = null) //do nothing;
-    if (JSON.parse(localStorage.getItem("storedRawMarks")) = null) //do nothing;
-    if (JSON.parse(localStorage.getItem("storedWeighting")) = null) ;
+    if (localStorage.getItem("storedWAM") == null) ;
+    if ((localStorage.getItem("storedRawMarks")) == null) ;
+    if ((localStorage.getItem("storedWeighting")) == null) ;
     else {
         WAM = JSON.parse(localStorage.getItem("storedWAM"));
         let raw = JSON.parse(localStorage.getItem("storedRawMarks"));
