@@ -137,7 +137,7 @@ const subjects = [
 ] 
 
 
-console.log(localStorage.getItem("storedWAM"))
+//select html with all subjects as options, remove if alr chosen, 4u ad 3u linked.
 
 window.onload = function populateInputs() {
     if (localStorage.getItem("storedWAM") == null) ;
@@ -164,12 +164,10 @@ window.onload = function populateInputs() {
     }
 }
 
-
 function setInputsinLocalStorage() {
     localStorage.setItem("storedRawMarks", JSON.stringify(rawMarks));
     localStorage.setItem("storedWeighting", JSON.stringify(weighting));
 }
-
 
 function setWAMinLocalStorage() {
     localStorage.setItem("storedWAM", JSON.stringify(WAM));
@@ -212,11 +210,11 @@ function getWeightedAverage(i){
     setInputsinLocalStorage();
 }
 
-console.log(rawMarks)
-
 function storeInput(userInput) {
     userInputId = userInput.target.getAttribute("id");
     userInputValue = parseInt(userInput.srcElement.value);
+
+    if (userInput.srcElement.value == "") userInputValue = 0;
     if (userInputId.includes("raw")) {
         for (let i=1; i <= 6; i++) {
                 for (let j=1; j <= 4; j++) {
@@ -224,7 +222,6 @@ function storeInput(userInput) {
                         if (userInput.srcElement.parentNode.parentNode.classList.contains(`subject${i}`)) {
                             if (userInputValue < 0 || userInputValue > 100) alert("please input a number from 0 to 100");
                             else {
-                                console.log(rawMarks["sub1"])
                                 rawMarks[`sub${i}`]["assessments"][`ass${j}`] = userInputValue;
                             }
                         }
@@ -241,6 +238,7 @@ function storeInput(userInput) {
                         if (userInput.srcElement.parentNode.parentNode.classList.contains(`subject${i}`)) {
                             if (userInputValue < 0 || userInputValue > 100) alert("please input a number from 0 to 100");
                             else {
+                
                             weighting[`sub${i}`]["assessments"][`ass${j}`] = userInputValue;
                             }
                         }
@@ -252,7 +250,7 @@ function storeInput(userInput) {
             }
         }
         else console.log("ERROR, not raw or weight");
-    }
+}
 
 function addKeyListener() {
     for (i = 0; i < userInputs.length; i++) {
@@ -269,10 +267,6 @@ function setSubjectNames() {
         else subjectNames[i].textContent = subjects[i];
     }
 }
-
-
-
-
 
 addKeyListener();
 setSubjectNames();
