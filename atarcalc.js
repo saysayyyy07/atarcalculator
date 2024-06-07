@@ -5,15 +5,14 @@ const subj4 = document.querySelector(".subject4");
 const subj5 = document.querySelector(".subject5");
 const subj6 = document.querySelector(".subject6");
 
-const subj1Name = document.querySelector(".subject1 .subjectName");
-const subj2Name = document.querySelector(".subject2 .subjectName");
-const subj3Name = document.querySelector(".subject3 .subjectName");
-const subj4Name = document.querySelector(".subject4 .subjectName");
-const subj5Name = document.querySelector(".subject5 .subjectName");
-const subj6Name = document.querySelector(".subject6 .subjectName");
+const subj1Name = document.querySelector(".subject1 select").value;
+const subj2Name = document.querySelector(".subject2 select").value;
+const subj3Name = document.querySelector(".subject3 select").value;
+const subj4Name = document.querySelector(".subject4 select").value;
+const subj5Name = document.querySelector(".subject5 select").value;
+const subj6Name = document.querySelector(".subject6 select").value;
 
-const firstNumInput = document.querySelector("#firstNum");
-const secondNumInput = document.querySelector("#secondNum");
+const subNames = document.querySelectorAll("select");
 const rawInputs = document.querySelectorAll("input #raw");
 const weightInputs = document.querySelectorAll("#weight");
 const userInputs = document.querySelectorAll("input");
@@ -22,6 +21,14 @@ const displayWAM = document.querySelectorAll(".wam")
 let firstNum = 0;
 let secondNum = 0;
 
+let storedSubjects = {
+    "sub1": "",
+    "sub2": "",
+    "sub3": "",
+    "sub4": "",
+    "sub5": "",
+    "sub6": "",
+}
 
 let rawMarks = {
     "sub1": {
@@ -127,30 +134,30 @@ let WAM = {
 const invalidChars = ["e", "+", "-", "Tab"];
 const subjectDivs = [subj1, subj2, subj3, subj4, subj5, subj6];
 const subjectNames = [subj1Name, subj2Name, subj3Name, subj4Name, subj5Name, subj6Name];
-const subjects = [
-"Mathematics Extension 1", 
-"Mathematics Extension 2", 
-"Biology", 
-"Physics", 
-"English Advanced", 
-""
-] 
 
 
-//select html with all subjects as options, remove if alr chosen, 4u ad 3u linked.
+
+//select html with all subjects as options, remove if alr chosen, 4u and 3u linked.
 
 window.onload = function populateInputs() {
+
+    if (localStorage.getItem("storedSubjects") == null) localStorage.setItem("storedSubjects", JSON.stringify(storedSubjects));
     if (localStorage.getItem("storedWAM") == null) ;
     if ((localStorage.getItem("storedRawMarks")) == null) ;
     if ((localStorage.getItem("storedWeighting")) == null) ;
     else {
+        storedSubjects = JSON.parse(localStorage.getItem("storedSubjects"));
         WAM = JSON.parse(localStorage.getItem("storedWAM"));
         let raw = JSON.parse(localStorage.getItem("storedRawMarks"));
         rawMarks = raw;
         let weight = JSON.parse(localStorage.getItem("storedWeighting"));
         weighting = weight;
+        let subjects = JSON.parse(localStorage.getItem("storedSubjects"));
 
         for (let subNum=1; subNum <= 6; subNum++) {
+            document.querySelector(`.subject${subNum} select`).value = subjects[`sub${subNum}`];
+
+
             displayWAMValue(subNum);
             for (let assNum=1; assNum <= 4; assNum++) {
                 if (raw[`sub${subNum}`] && raw[`sub${subNum}`]["assessments"] && raw[`sub${subNum}`]["assessments"][`ass${assNum}`]) {
@@ -163,6 +170,7 @@ window.onload = function populateInputs() {
         }
     }
 }
+
 
 function setInputsinLocalStorage() {
     localStorage.setItem("storedRawMarks", JSON.stringify(rawMarks));
@@ -211,6 +219,8 @@ function getWeightedAverage(i){
 }
 
 function storeInput(userInput) {
+    
+
     userInputId = userInput.target.getAttribute("id");
     userInputValue = parseInt(userInput.srcElement.value);
 
@@ -261,12 +271,26 @@ function addKeyListener() {
     }
 }
 
-function setSubjectNames() {
-    for (let i=0; i <= 5; i++) {
-        if (subjects[i] === "") subjectDivs[i].style.display = "none";
-        else subjectNames[i].textContent = subjects[i];
+function addSelectListener() {
+    for (let i=0; i < subjectNames.length; i++) {
+        subNames[i].addEventListener("change", (e) => {
+            setSubjectNames(e);
+        })
     }
 }
 
+
+
+
+function setSubjectNames(subject) {
+    subNum = subject.target.id[3];
+    subName = subject.target.value
+    
+    storedSubjects[`sub${subNum}`] = subName
+    localStorage.setItem(`storedSubjects`, JSON.stringify(storedSubjects));
+}
+
+
+
 addKeyListener();
-setSubjectNames();
+addSelectListener();
