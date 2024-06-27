@@ -135,9 +135,16 @@ const invalidChars = ["e", "+", "-", "Tab"];
 const subjectDivs = [subj1, subj2, subj3, subj4, subj5, subj6];
 const subjectNames = [subj1Name, subj2Name, subj3Name, subj4Name, subj5Name, subj6Name];
 
+// TO DOOOO
 
-
-//select html with all subjects as options, remove if alr chosen, 4u and 3u linked.
+// move select to js with document.createElement
+// make an object with all subject names and ids 
+// remove if alr chosen
+// 4u and 3u linked.
+// add/remove subjects
+// on change subject, clear inputs/wam
+// nicer CSS
+// add/remove assessments (per sub or everything?)
 
 window.onload = function populateInputs() {
 
@@ -148,10 +155,8 @@ window.onload = function populateInputs() {
     else {
         storedSubjects = JSON.parse(localStorage.getItem("storedSubjects"));
         WAM = JSON.parse(localStorage.getItem("storedWAM"));
-        let raw = JSON.parse(localStorage.getItem("storedRawMarks"));
-        rawMarks = raw;
-        let weight = JSON.parse(localStorage.getItem("storedWeighting"));
-        weighting = weight;
+        rawMarks = JSON.parse(localStorage.getItem("storedRawMarks"));
+        weighting = JSON.parse(localStorage.getItem("storedWeighting"));
         let subjects = JSON.parse(localStorage.getItem("storedSubjects"));
 
         for (let subNum=1; subNum <= 6; subNum++) {
@@ -160,17 +165,16 @@ window.onload = function populateInputs() {
 
             displayWAMValue(subNum);
             for (let assNum=1; assNum <= 4; assNum++) {
-                if (raw[`sub${subNum}`] && raw[`sub${subNum}`]["assessments"] && raw[`sub${subNum}`]["assessments"][`ass${assNum}`]) {
-                document.getElementById(`subject${subNum} raw ass${assNum}`).value = raw["sub" + subNum]["assessments"]["ass" + assNum];
+                if (rawMarks[`sub${subNum}`] && rawMarks[`sub${subNum}`]["assessments"] && rawMarks[`sub${subNum}`]["assessments"][`ass${assNum}`]) {
+                document.getElementById(`subject${subNum} raw ass${assNum}`).value = rawMarks["sub" + subNum]["assessments"]["ass" + assNum];
                 }
-                if (weight[`sub${subNum}`] && weight[`sub${subNum}`]["assessments"] && weight[`sub${subNum}`]["assessments"][`ass${assNum}`]) {
-                document.getElementById(`subject${subNum} weight ass${assNum}`).value = weight["sub" + subNum]["assessments"]["ass" + assNum];
+                if (weighting[`sub${subNum}`] && weighting[`sub${subNum}`]["assessments"] && weighting[`sub${subNum}`]["assessments"][`ass${assNum}`]) {
+                document.getElementById(`subject${subNum} weight ass${assNum}`).value = weighting["sub" + subNum]["assessments"]["ass" + assNum];
                 }
             }
         }
     }
 }
-
 
 function setInputsinLocalStorage() {
     localStorage.setItem("storedRawMarks", JSON.stringify(rawMarks));
@@ -278,9 +282,6 @@ function addSelectListener() {
         })
     }
 }
-
-
-
 
 function setSubjectNames(subject) {
     subNum = subject.target.id[3];
