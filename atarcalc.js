@@ -5,6 +5,13 @@ const subj4 = document.querySelector(".subject4");
 const subj5 = document.querySelector(".subject5");
 const subj6 = document.querySelector(".subject6");
 
+const aligned1 = document.querySelector(".aligned1");
+const aligned2 = document.querySelector(".aligned2");
+const aligned3 = document.querySelector(".aligned3");
+const aligned4 = document.querySelector(".aligned4");
+const aligned5 = document.querySelector(".aligned5");
+const aligned6 = document.querySelector(".aligned6");
+
 const subj1Name = document.querySelector(".subject1 select").value;
 const subj2Name = document.querySelector(".subject2 select").value;
 const subj3Name = document.querySelector(".subject3 select").value;
@@ -131,6 +138,9 @@ let WAM = {
     "sub6": 0,
 }
 
+let aligned = {
+}
+
 const invalidChars = ["e", "+", "-", "Tab"];
 const subjectDivs = [subj1, subj2, subj3, subj4, subj5, subj6];
 const subjectNames = [subj1Name, subj2Name, subj3Name, subj4Name, subj5Name, subj6Name];
@@ -145,6 +155,8 @@ const subjectNames = [subj1Name, subj2Name, subj3Name, subj4Name, subj5Name, sub
 // on change subject, clear inputs/wam
 // nicer CSS
 // add/remove assessments (per sub or everything?)
+
+
 
 window.onload = function populateInputs() {
 
@@ -162,8 +174,8 @@ window.onload = function populateInputs() {
         for (let subNum=1; subNum <= 6; subNum++) {
             document.querySelector(`.subject${subNum} select`).value = subjects[`sub${subNum}`];
 
-
             displayWAMValue(subNum);
+            rawToAligned(subNum);
             for (let assNum=1; assNum <= 4; assNum++) {
                 if (rawMarks[`sub${subNum}`] && rawMarks[`sub${subNum}`]["assessments"] && rawMarks[`sub${subNum}`]["assessments"][`ass${assNum}`]) {
                 document.getElementById(`subject${subNum} raw ass${assNum}`).value = rawMarks["sub" + subNum]["assessments"]["ass" + assNum];
@@ -220,10 +232,10 @@ function getWeightedAverage(i){
     displayWAMValue(i);
     setWAMinLocalStorage();
     setInputsinLocalStorage();
+    rawToAligned(i);
 }
 
 function storeInput(userInput) {
-    
 
     userInputId = userInput.target.getAttribute("id");
     userInputValue = parseInt(userInput.srcElement.value);
@@ -237,12 +249,12 @@ function storeInput(userInput) {
                             if (userInputValue < 0 || userInputValue > 100) alert("please input a number from 0 to 100");
                             else {
                                 rawMarks[`sub${i}`]["assessments"][`ass${j}`] = userInputValue;
+                                getWeightedAverage(i);
+                                nanRemover();
                             }
                         }
                     }
                 }
-                getWeightedAverage(i);
-                nanRemover();
             }   
     
         } else if (userInputId.includes("weight")) {
@@ -252,14 +264,13 @@ function storeInput(userInput) {
                         if (userInput.srcElement.parentNode.parentNode.classList.contains(`subject${i}`)) {
                             if (userInputValue < 0 || userInputValue > 100) alert("please input a number from 0 to 100");
                             else {
-                
                             weighting[`sub${i}`]["assessments"][`ass${j}`] = userInputValue;
+                            getWeightedAverage(i);
+                            nanRemover();
                             }
                         }
     
                     }
-                getWeightedAverage(i);
-                nanRemover();
                 }
             }
         }
@@ -291,6 +302,251 @@ function setSubjectNames(subject) {
     localStorage.setItem(`storedSubjects`, JSON.stringify(storedSubjects));
 }
 
+function rawToAligned(subNum) {
+    subName = document.getElementById(`sub${subNum}`).value;
+    storedWAM = JSON.parse(localStorage.getItem("storedWAM"));
+    subWAM = storedWAM[`sub${subNum}`];
+    alignedMark = aligned[subName];
+
+    console.log(subName, subWAM);
+
+    if (subName == "mathstd") {
+        if (subWAM >= 90) {
+
+        } else if (subWAM >= 80) {
+
+        } else if (subWAM >= 70) {
+    
+        } else if (subWAM >= 60) {
+
+        } else if (subWAM >= 50) {
+
+        } else {
+
+              }
+    } else if (subName == "mathsadv") {
+        if (subWAM >= 90) {
+
+        } else if (subWAM >= 80) {
+
+        } else if (subWAM >= 70) {
+    
+        } else if (subWAM >= 60) {
+
+        } else if (subWAM >= 50) {
+
+        } else {
+
+              }
+    } else if (subName == "mathsext1") {
+        //2023 data
+        if (subWAM >= 64.29) {
+            aligned[subName] = 0.254615*subWAM + 73.6308;
+        } else if (subWAM >= 45.71) {
+            aligned[subName] = 1.04987*subWAM + 22.0105;
+        } else if (subWAM >= 20) {
+            aligned[subName] = 0.79328*subWAM + 33.8656;
+        } else {
+            aligned[subName] = 2.45184*subWAM + 0.469352;
+              }
+    } else if (subName == "mathsext2") {
+        //2023 data
+        if (subWAM >= 66) {
+            aligned[subName] = 5*subWAM/17 + 1200/17;
+        } else if (subWAM >= 42) {
+            aligned[subName] = 10*subWAM/11 + 351/11;
+        } else if (subWAM >= 20) {
+            aligned[subName] = 9*subWAM/10 + 161/5;
+        } else {
+            aligned[subName] = 5*subWAM/2;
+              }
+    } else if (subName == "biology") {
+            //2022 data
+        if (subWAM >= 78) {
+            aligned[subName] = subWAM/2 + 51;
+        } else if (subWAM >= 65) {
+            aligned[subName] = 3*subWAM/4 + 125/4;
+        } else if (subWAM >= 52) {
+            aligned[subName] = 3*subWAM/4 + 125/4;
+        } else if (subWAM >= 38) {
+            aligned[subName] = 5*subWAM/7 + 230/7;
+        } else {
+            aligned[subName] = 30*subWAM/19;
+              }
+    } else if (subName == "chemistry") {
+        //2023 data
+        if (subWAM >= 85) {
+            aligned[subName] = subWAM/2 + 95/2;
+        } else if (subWAM >= 72) {
+            aligned[subName] = 5*subWAM/7 + 200/7;
+        } else if (subWAM >= 55) {
+            aligned[subName] = 3*subWAM/5 + 37;
+        } else {
+            aligned[subName] = 14*subWAM/11;
+              }
+    } else if (subName == "physics") {
+        //2022 data
+        if (subWAM >= 89) {
+            aligned[subName] = 7*subWAM/8 + 97/8;
+        } else if (subWAM >= 74) {
+            aligned[subName] = 2*subWAM/3 + 92/3;
+        } else if (subWAM >= 54) {
+            aligned[subName] = subWAM/2 + 43;
+        } else {
+            aligned[subName] = 35*subWAM/27;
+              }
+    } else if (subName == "englishstd") {
+        if (subWAM >= 90) {
+
+        } else if (subWAM >= 80) {
+
+        } else if (subWAM >= 70) {
+    
+        } else if (subWAM >= 60) {
+
+        } else if (subWAM >= 50) {
+
+        } else {
+
+              }
+    } else if (subName == "englishadv") {
+        //2023 data
+        if (subWAM >= 85) {
+            aligned[subName] = 0.615385*subWAM + 37.7692;
+        } else if (subWAM >= 67) {
+            aligned[subName] = 0.580645*subWAM + 41.0968;
+        } else {
+            aligned[subName] = 80*subNum/67;
+              }
+    } else if (subName == "englishext1") {
+        if (subWAM >= 90) {
+
+        } else if (subWAM >= 80) {
+
+        } else if (subWAM >= 70) {
+    
+        } else if (subWAM >= 60) {
+
+        } else if (subWAM >= 50) {
+
+        } else {
+
+              }
+    } else if (subName == "englishext2") {
+        if (subWAM >= 90) {
+
+        } else if (subWAM >= 80) {
+
+        } else if (subWAM >= 70) {
+    
+        } else if (subWAM >= 60) {
+
+        } else if (subWAM >= 50) {
+
+        } else {
+
+              }
+    } else if (subName == "economics") {
+        if (subWAM >= 90) {
+
+        } else if (subWAM >= 80) {
+
+        } else if (subWAM >= 70) {
+    
+        } else if (subWAM >= 60) {
+
+        } else if (subWAM >= 50) {
+
+        } else {
+
+              }
+    } else if (subName == "business") {
+        if (subWAM >= 90) {
+
+        } else if (subWAM >= 80) {
+
+        } else if (subWAM >= 70) {
+    
+        } else if (subWAM >= 60) {
+
+        } else if (subWAM >= 50) {
+
+        } else {
+
+              }
+    } else if (subName == "legal") {
+        if (subWAM >= 90) {
+
+        } else if (subWAM >= 80) {
+
+        } else if (subWAM >= 70) {
+    
+        } else if (subWAM >= 60) {
+
+        } else if (subWAM >= 50) {
+
+        } else {
+
+              }
+    } else if (subName == "modernhis") {
+        if (subWAM >= 90) {
+
+        } else if (subWAM >= 80) {
+
+        } else if (subWAM >= 70) {
+    
+        } else if (subWAM >= 60) {
+
+        } else if (subWAM >= 50) {
+
+        } else {
+
+              }
+    } else if (subName == "ancienthis") {
+        if (subWAM >= 90) {
+
+        } else if (subWAM >= 80) {
+
+        } else if (subWAM >= 70) {
+    
+        } else if (subWAM >= 60) {
+
+        } else if (subWAM >= 50) {
+
+        } else {
+
+              }
+    } else if (subName == "sdd") {
+        if (subWAM >= 90) {
+
+        } else if (subWAM >= 80) {
+
+        } else if (subWAM >= 70) {
+    
+        } else if (subWAM >= 60) {
+
+        } else if (subWAM >= 50) {
+
+        } else {
+
+              }
+    } else if (subName == "engineering") {
+        if (subWAM >= 90) {
+
+        } else if (subWAM >= 80) {
+
+        } else if (subWAM >= 70) {
+    
+        } else if (subWAM >= 60) {
+
+        } else if (subWAM >= 50) {
+
+        } else {
+
+              }
+    }
+    console.log(aligned);
+}
 
 
 addKeyListener();
