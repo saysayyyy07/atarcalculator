@@ -52,7 +52,7 @@ body {
 
 input, select, .wam {
     background-color: rgb(39, 39, 39);
-    color: antiquewhite;
+    color: rgb(255, 249, 241);
     border-radius: 4px;
     padding: 2px;
     outline-color: rgb(206, 206, 206);
@@ -81,5 +81,8 @@ select {
 }
 
 .wam {
-    text-align: center;
+    height: 30px;
+    box-sizing: border-box;
+    padding: 5px;
+    vertical-align:middle
 }
