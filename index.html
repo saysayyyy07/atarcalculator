@@ -6,216 +6,227 @@
     <title>Atar Calculator</title>
     <link rel="stylesheet" href="styles.css">
     <script src="atarcalc.js" defer></script>
-    <!-- <link rel="icon" href="atarcalcfavicon.png"> -->
 </head>
 
 <body>
-    <div class="rawmarksInput">
-        <div class="subject1">
-            <select name="subjectselector" id="sub1">
-                <option value="mathsstd">Maths (Standard)</option>
-                <option value="mathsadv">Maths (Advanced)</option>
-                <option value="mathsext1">Maths Ext 1</option>
-                <option value="mathsext2">Maths Ext 2</option>
-                <option value="biology">Biology</option>
-                <option value="chemistry">Chemistry</option>
-                <option value="physics">Physics</option>
-                <option value="englishstd">English (Standard)</option>
-                <option value="englishadv">English (Advanced)</option>
-                <option value="englishext1">English Ext 1</option>
-                <option value="englishext2">English Ext 2</option>
-                <option value="economics">Economics</option>
-                <option value="business">Business Studies</option>
-                <option value="legal">Legal Studies</option>
-                <option value="modernhis">Modern History</option>
-                <option value="ancienthis">Ancient History</option>
-                <option value="sdd">SDD</option>
-                <option value="engineering">Engineering Studies</option>
-            </select>
-            <div class="inputs">
-                <input id="subject1 raw ass1" type="number" placeholder="raw%">
-                <input id="subject1 weight ass1" type="number" placeholder="weight%">
-                <input id="subject1 raw ass2" type="number" placeholder="raw%">
-                <input id="subject1 weight ass2" type="number" placeholder="weight%">
-                <input id="subject1 raw ass3" type="number" placeholder="raw%">
-                <input id="subject1 weight ass3" type="number" placeholder="weight%">
-                <input id="subject1 raw ass4" type="number" placeholder="raw%">
-                <input id="subject1 weight ass4" type="number" placeholder="weight%">
-            </div>
-            <div class="wam">WAM: 0</div>
-            <div class="aligned 1">Aligned: 0</div>
+    <div class="rawmarkscontainer">
+        <div class="tooltip">
+            <span class="tooltiptext">
+                Weighted Average Mean (WAM): calculating your average mark, considering the weighting of each assessment. 
+                <br> <br>
+                Aligned marks: NESA's system for standardising your raw marks based on the difficulty of <em>your</em> HSC exam relative to past years.
+                <br> <br>
+                Band: The descriptor that corrrelates to your aligned mark. <a href="https://www.nsw.gov.au/education-and-training/nesa/hsc/results-and-certificates/understanding-your-results/#toc-performance-bands" target=”_blank”>NESA band cutoffs</a>
+        
+            </span>
+            <img src="question mark icon.png" alt="question mark icon" class="questionmark">
         </div>
-        <div class="subject2">
-            <select name="subjectselector" id="sub2">
-                <option value="mathsstd">Maths (Standard)</option>
-                <option value="mathsadv">Maths (Advanced)</option>
-                <option value="mathsext1">Maths Ext 1</option>
-                <option value="mathsext2">Maths Ext 2</option>
-                <option value="biology">Biology</option>
-                <option value="chemistry">Chemistry</option>
-                <option value="physics">Physics</option>
-                <option value="englishstd">English (Standard)</option>
-                <option value="englishadv">English (Advanced)</option>
-                <option value="englishext1">English Ext 1</option>
-                <option value="englishext2">English Ext 2</option>
-                <option value="economics">Economics</option>
-                <option value="business">Business Studies</option>
-                <option value="legal">Legal Studies</option>
-                <option value="modernhis">Modern History</option>
-                <option value="ancienthis">Ancient History</option>
-                <option value="sdd">SDD</option>
-                <option value="engineering">Engineering Studies</option>
-            </select>
-            <div class="inputs">
-                <input id="subject2 raw ass1" type="number" placeholder="raw%">
-                <input id="subject2 weight ass1" type="number" placeholder="weight%">
-                <input id="subject2 raw ass2" type="number" placeholder="raw%">
-                <input id="subject2 weight ass2" type="number" placeholder="weight%">
-                <input id="subject2 raw ass3" type="number" placeholder="raw%">
-                <input id="subject2 weight ass3" type="number" placeholder="weight%">
-                <input id="subject2 raw ass4" type="number" placeholder="raw%">
-                <input id="subject2 weight ass4" type="number" placeholder="weight%">
+        <div class="rawmarksInput">
+            <div class="subject1">
+                <select name="subjectselector" id="sub1">
+                    <option value="mathsstd">Maths (Standard)</option>
+                    <option value="mathsadv">Maths (Advanced)</option>
+                    <option value="mathsext1">Maths Ext 1</option>
+                    <option value="mathsext2">Maths Ext 2</option>
+                    <option value="biology">Biology</option>
+                    <option value="chemistry">Chemistry</option>
+                    <option value="physics">Physics</option>
+                    <option value="englishstd">English (Standard)</option>
+                    <option value="englishadv">English (Advanced)</option>
+                    <option value="englishext1">English Ext 1</option>
+                    <option value="englishext2">English Ext 2</option>
+                    <option value="economics">Economics</option>
+                    <option value="business">Business Studies</option>
+                    <option value="legal">Legal Studies</option>
+                    <option value="modernhis">Modern History</option>
+                    <option value="ancienthis">Ancient History</option>
+                    <option value="sdd">SDD</option>
+                    <option value="engineering">Engineering Studies</option>
+                </select>
+                <div class="inputs">
+                    <input id="subject1 raw ass1" type="number" placeholder="raw%">
+                    <input id="subject1 weight ass1" type="number" placeholder="weight%">
+                    <input id="subject1 raw ass2" type="number" placeholder="raw%">
+                    <input id="subject1 weight ass2" type="number" placeholder="weight%">
+                    <input id="subject1 raw ass3" type="number" placeholder="raw%">
+                    <input id="subject1 weight ass3" type="number" placeholder="weight%">
+                    <input id="subject1 raw ass4" type="number" placeholder="raw%">
+                    <input id="subject1 weight ass4" type="number" placeholder="weight%">
+                </div>
+                <div class="wam">WAM: 0</div>
+                <div class="aligned 1">Aligned: 0</div>
             </div>
-            <div class="wam">WAM: 0</div>
-            <div class="aligned 2">Aligned: 0</div>
-        </div>
-        <div class="subject3">
-            <select name="subjectselector" id="sub3">
-                <option value="mathsstd">Maths (Standard)</option>
-                <option value="mathsadv">Maths (Advanced)</option>
-                <option value="mathsext1">Maths Ext 1</option>
-                <option value="mathsext2">Maths Ext 2</option>
-                <option value="biology">Biology</option>
-                <option value="chemistry">Chemistry</option>
-                <option value="physics">Physics</option>
-                <option value="englishstd">English (Standard)</option>
-                <option value="englishadv">English (Advanced)</option>
-                <option value="englishext1">English Ext 1</option>
-                <option value="englishext2">English Ext 2</option>
-                <option value="economics">Economics</option>
-                <option value="business">Business Studies</option>
-                <option value="legal">Legal Studies</option>
-                <option value="modernhis">Modern History</option>
-                <option value="ancienthis">Ancient History</option>
-                <option value="sdd">SDD</option>
-                <option value="engineering">Engineering Studies</option>
-            </select>
-            <div class="inputs">
-                <input id="subject3 raw ass1" type="number" placeholder="raw%">
-                <input id="subject3 weight ass1" type="number" placeholder="weight%">
-                <input id="subject3 raw ass2" type="number" placeholder="raw%">
-                <input id="subject3 weight ass2" type="number" placeholder="weight%">
-                <input id="subject3 raw ass3" type="number" placeholder="raw%">
-                <input id="subject3 weight ass3" type="number" placeholder="weight%">
-                <input id="subject3 raw ass4" type="number" placeholder="raw%">
-                <input id="subject3 weight ass4" type="number" placeholder="weight%">
+            <div class="subject2">
+                <select name="subjectselector" id="sub2">
+                    <option value="mathsstd">Maths (Standard)</option>
+                    <option value="mathsadv">Maths (Advanced)</option>
+                    <option value="mathsext1">Maths Ext 1</option>
+                    <option value="mathsext2">Maths Ext 2</option>
+                    <option value="biology">Biology</option>
+                    <option value="chemistry">Chemistry</option>
+                    <option value="physics">Physics</option>
+                    <option value="englishstd">English (Standard)</option>
+                    <option value="englishadv">English (Advanced)</option>
+                    <option value="englishext1">English Ext 1</option>
+                    <option value="englishext2">English Ext 2</option>
+                    <option value="economics">Economics</option>
+                    <option value="business">Business Studies</option>
+                    <option value="legal">Legal Studies</option>
+                    <option value="modernhis">Modern History</option>
+                    <option value="ancienthis">Ancient History</option>
+                    <option value="sdd">SDD</option>
+                    <option value="engineering">Engineering Studies</option>
+                </select>
+                <div class="inputs">
+                    <input id="subject2 raw ass1" type="number" placeholder="raw%">
+                    <input id="subject2 weight ass1" type="number" placeholder="weight%">
+                    <input id="subject2 raw ass2" type="number" placeholder="raw%">
+                    <input id="subject2 weight ass2" type="number" placeholder="weight%">
+                    <input id="subject2 raw ass3" type="number" placeholder="raw%">
+                    <input id="subject2 weight ass3" type="number" placeholder="weight%">
+                    <input id="subject2 raw ass4" type="number" placeholder="raw%">
+                    <input id="subject2 weight ass4" type="number" placeholder="weight%">
+                </div>
+                <div class="wam">WAM: 0</div>
+                <div class="aligned 2">Aligned: 0</div>
             </div>
-            <div class="wam">WAM: 0</div>
-            <div class="aligned 3">Aligned: 0</div>
-        </div>
-        <div class="subject4">
-            <select name="subjectselector" id="sub4">
-                <option value="mathsstd">Maths (Standard)</option>
-                <option value="mathsadv">Maths (Advanced)</option>
-                <option value="mathsext1">Maths Ext 1</option>
-                <option value="mathsext2">Maths Ext 2</option>
-                <option value="biology">Biology</option>
-                <option value="chemistry">Chemistry</option>
-                <option value="physics">Physics</option>
-                <option value="englishstd">English (Standard)</option>
-                <option value="englishadv">English (Advanced)</option>
-                <option value="englishext1">English Ext 1</option>
-                <option value="englishext2">English Ext 2</option>
-                <option value="economics">Economics</option>
-                <option value="business">Business Studies</option>
-                <option value="legal">Legal Studies</option>
-                <option value="modernhis">Modern History</option>
-                <option value="ancienthis">Ancient History</option>
-                <option value="sdd">SDD</option>
-                <option value="engineering">Engineering Studies</option>
-            </select>
-            <div class="inputs">
-                <input id="subject4 raw ass1" type="number" placeholder="raw%">
-                <input id="subject4 weight ass1" type="number" placeholder="weight%">
-                <input id="subject4 raw ass2" type="number" placeholder="raw%">
-                <input id="subject4 weight ass2" type="number" placeholder="weight%">
-                <input id="subject4 raw ass3" type="number" placeholder="raw%">
-                <input id="subject4 weight ass3" type="number" placeholder="weight%">
-                <input id="subject4 raw ass4" type="number" placeholder="raw%">
-                <input id="subject4 weight ass4" type="number" placeholder="weight%">
+            <div class="subject3">
+                <select name="subjectselector" id="sub3">
+                    <option value="mathsstd">Maths (Standard)</option>
+                    <option value="mathsadv">Maths (Advanced)</option>
+                    <option value="mathsext1">Maths Ext 1</option>
+                    <option value="mathsext2">Maths Ext 2</option>
+                    <option value="biology">Biology</option>
+                    <option value="chemistry">Chemistry</option>
+                    <option value="physics">Physics</option>
+                    <option value="englishstd">English (Standard)</option>
+                    <option value="englishadv">English (Advanced)</option>
+                    <option value="englishext1">English Ext 1</option>
+                    <option value="englishext2">English Ext 2</option>
+                    <option value="economics">Economics</option>
+                    <option value="business">Business Studies</option>
+                    <option value="legal">Legal Studies</option>
+                    <option value="modernhis">Modern History</option>
+                    <option value="ancienthis">Ancient History</option>
+                    <option value="sdd">SDD</option>
+                    <option value="engineering">Engineering Studies</option>
+                </select>
+                <div class="inputs">
+                    <input id="subject3 raw ass1" type="number" placeholder="raw%">
+                    <input id="subject3 weight ass1" type="number" placeholder="weight%">
+                    <input id="subject3 raw ass2" type="number" placeholder="raw%">
+                    <input id="subject3 weight ass2" type="number" placeholder="weight%">
+                    <input id="subject3 raw ass3" type="number" placeholder="raw%">
+                    <input id="subject3 weight ass3" type="number" placeholder="weight%">
+                    <input id="subject3 raw ass4" type="number" placeholder="raw%">
+                    <input id="subject3 weight ass4" type="number" placeholder="weight%">
+                </div>
+                <div class="wam">WAM: 0</div>
+                <div class="aligned 3">Aligned: 0</div>
             </div>
-            <div class="wam">WAM: 0</div>
-            <div class="aligned 4">Aligned: 0</div>
-        </div>
-        <div class="subject5">
-            <select name="subjectselector" id="sub5">
-                <option value="mathsstd">Maths (Standard)</option>
-                <option value="mathsadv">Maths (Advanced)</option>
-                <option value="mathsext1">Maths Ext 1</option>
-                <option value="mathsext2">Maths Ext 2</option>
-                <option value="biology">Biology</option>
-                <option value="chemistry">Chemistry</option>
-                <option value="physics">Physics</option>
-                <option value="englishstd">English (Standard)</option>
-                <option value="englishadv">English (Advanced)</option>
-                <option value="englishext1">English Ext 1</option>
-                <option value="englishext2">English Ext 2</option>
-                <option value="economics">Economics</option>
-                <option value="business">Business Studies</option>
-                <option value="legal">Legal Studies</option>
-                <option value="modernhis">Modern History</option>
-                <option value="ancienthis">Ancient History</option>
-                <option value="sdd">SDD</option>
-                <option value="engineering">Engineering Studies</option>
-            </select>
-            <div class="inputs">
-                <input id="subject5 raw ass1" type="number" placeholder="raw%">
-                <input id="subject5 weight ass1" type="number" placeholder="weight%">
-                <input id="subject5 raw ass2" type="number" placeholder="raw%">
-                <input id="subject5 weight ass2" type="number" placeholder="weight%">
-                <input id="subject5 raw ass3" type="number" placeholder="raw%">
-                <input id="subject5 weight ass3" type="number" placeholder="weight%">
-                <input id="subject5 raw ass4" type="number" placeholder="raw%">
-                <input id="subject5 weight ass4" type="number" placeholder="weight%">
+            <div class="subject4">
+                <select name="subjectselector" id="sub4">
+                    <option value="mathsstd">Maths (Standard)</option>
+                    <option value="mathsadv">Maths (Advanced)</option>
+                    <option value="mathsext1">Maths Ext 1</option>
+                    <option value="mathsext2">Maths Ext 2</option>
+                    <option value="biology">Biology</option>
+                    <option value="chemistry">Chemistry</option>
+                    <option value="physics">Physics</option>
+                    <option value="englishstd">English (Standard)</option>
+                    <option value="englishadv">English (Advanced)</option>
+                    <option value="englishext1">English Ext 1</option>
+                    <option value="englishext2">English Ext 2</option>
+                    <option value="economics">Economics</option>
+                    <option value="business">Business Studies</option>
+                    <option value="legal">Legal Studies</option>
+                    <option value="modernhis">Modern History</option>
+                    <option value="ancienthis">Ancient History</option>
+                    <option value="sdd">SDD</option>
+                    <option value="engineering">Engineering Studies</option>
+                </select>
+                <div class="inputs">
+                    <input id="subject4 raw ass1" type="number" placeholder="raw%">
+                    <input id="subject4 weight ass1" type="number" placeholder="weight%">
+                    <input id="subject4 raw ass2" type="number" placeholder="raw%">
+                    <input id="subject4 weight ass2" type="number" placeholder="weight%">
+                    <input id="subject4 raw ass3" type="number" placeholder="raw%">
+                    <input id="subject4 weight ass3" type="number" placeholder="weight%">
+                    <input id="subject4 raw ass4" type="number" placeholder="raw%">
+                    <input id="subject4 weight ass4" type="number" placeholder="weight%">
+                </div>
+                <div class="wam">WAM: 0</div>
+                <div class="aligned 4">Aligned: 0</div>
             </div>
-            <div class="wam">WAM: 0</div>
-            <div class="aligned 5">Aligned: 0</div>
-        </div>
-        <div class="subject6">
-            <select name="subjectselector" id="sub6">
-                <option value="mathsstd">Maths (Standard)</option>
-                <option value="mathsadv">Maths (Advanced)</option>
-                <option value="mathsext1">Maths Ext 1</option>
-                <option value="mathsext2">Maths Ext 2</option>
-                <option value="biology">Biology</option>
-                <option value="chemistry">Chemistry</option>
-                <option value="physics">Physics</option>
-                <option value="englishstd">English (Standard)</option>
-                <option value="englishadv">English (Advanced)</option>
-                <option value="englishext1">English Ext 1</option>
-                <option value="englishext2">English Ext 2</option>
-                <option value="economics">Economics</option>
-                <option value="business">Business Studies</option>
-                <option value="legal">Legal Studies</option>
-                <option value="modernhis">Modern History</option>
-                <option value="ancienthis">Ancient History</option>
-                <option value="sdd">SDD</option>
-                <option value="engineering">Engineering Studies</option>
-            </select>
-            <div class="inputs">
-                <input id="subject6 raw ass1" type="number" placeholder="raw%">
-                <input id="subject6 weight ass1" type="number" placeholder="weight%">
-                <input id="subject6 raw ass2" type="number" placeholder="raw%">
-                <input id="subject6 weight ass2" type="number" placeholder="weight%">
-                <input id="subject6 raw ass3" type="number" placeholder="raw%">
-                <input id="subject6 weight ass3" type="number" placeholder="weight%">
-                <input id="subject6 raw ass4" type="number" placeholder="raw%">
-                <input id="subject6 weight ass4" type="number" placeholder="weight%">
+            <div class="subject5">
+                <select name="subjectselector" id="sub5">
+                    <option value="mathsstd">Maths (Standard)</option>
+                    <option value="mathsadv">Maths (Advanced)</option>
+                    <option value="mathsext1">Maths Ext 1</option>
+                    <option value="mathsext2">Maths Ext 2</option>
+                    <option value="biology">Biology</option>
+                    <option value="chemistry">Chemistry</option>
+                    <option value="physics">Physics</option>
+                    <option value="englishstd">English (Standard)</option>
+                    <option value="englishadv">English (Advanced)</option>
+                    <option value="englishext1">English Ext 1</option>
+                    <option value="englishext2">English Ext 2</option>
+                    <option value="economics">Economics</option>
+                    <option value="business">Business Studies</option>
+                    <option value="legal">Legal Studies</option>
+                    <option value="modernhis">Modern History</option>
+                    <option value="ancienthis">Ancient History</option>
+                    <option value="sdd">SDD</option>
+                    <option value="engineering">Engineering Studies</option>
+                </select>
+                <div class="inputs">
+                    <input id="subject5 raw ass1" type="number" placeholder="raw%">
+                    <input id="subject5 weight ass1" type="number" placeholder="weight%">
+                    <input id="subject5 raw ass2" type="number" placeholder="raw%">
+                    <input id="subject5 weight ass2" type="number" placeholder="weight%">
+                    <input id="subject5 raw ass3" type="number" placeholder="raw%">
+                    <input id="subject5 weight ass3" type="number" placeholder="weight%">
+                    <input id="subject5 raw ass4" type="number" placeholder="raw%">
+                    <input id="subject5 weight ass4" type="number" placeholder="weight%">
+                </div>
+                <div class="wam">WAM: 0</div>
+                <div class="aligned 5">Aligned: 0</div>
             </div>
-            <div class="wam">WAM: 0</div>
-            <div class="aligned 6">Aligned: 0</div>
+            <div class="subject6">
+                <select name="subjectselector" id="sub6">
+                    <option value="mathsstd">Maths (Standard)</option>
+                    <option value="mathsadv">Maths (Advanced)</option>
+                    <option value="mathsext1">Maths Ext 1</option>
+                    <option value="mathsext2">Maths Ext 2</option>
+                    <option value="biology">Biology</option>
+                    <option value="chemistry">Chemistry</option>
+                    <option value="physics">Physics</option>
+                    <option value="englishstd">English (Standard)</option>
+                    <option value="englishadv">English (Advanced)</option>
+                    <option value="englishext1">English Ext 1</option>
+                    <option value="englishext2">English Ext 2</option>
+                    <option value="economics">Economics</option>
+                    <option value="business">Business Studies</option>
+                    <option value="legal">Legal Studies</option>
+                    <option value="modernhis">Modern History</option>
+                    <option value="ancienthis">Ancient History</option>
+                    <option value="sdd">SDD</option>
+                    <option value="engineering">Engineering Studies</option>
+                </select>
+                <div class="inputs">
+                    <input id="subject6 raw ass1" type="number" placeholder="raw%">
+                    <input id="subject6 weight ass1" type="number" placeholder="weight%">
+                    <input id="subject6 raw ass2" type="number" placeholder="raw%">
+                    <input id="subject6 weight ass2" type="number" placeholder="weight%">
+                    <input id="subject6 raw ass3" type="number" placeholder="raw%">
+                    <input id="subject6 weight ass3" type="number" placeholder="weight%">
+                    <input id="subject6 raw ass4" type="number" placeholder="raw%">
+                    <input id="subject6 weight ass4" type="number" placeholder="weight%">
+                </div>
+                <div class="wam">WAM: 0</div>
+                <div class="aligned 6">Aligned: 0</div>
+            </div>
         </div>
-    </div>
     </div>
     <div class="supportedsubjects">
         The supported subjects for the raw-aligned conversion are (currently): 

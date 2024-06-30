@@ -216,8 +216,8 @@ function roundDisplay() {
 }
 
 function displayWAMValue(subject) {
-
-    if (displayWAM[subject-1].parentNode.classList.contains(`subject${subject}`)) {
+    if (displayWAM[subject-1].parentNode.classList.contains(`subject${subject}`) ||
+        displayWAM[subject-1].parentNode.parentNode.classList.contains(`subject${subject}`) ) {
         roundDisplay();
         displayWAM[subject-1].innerHTML = "WAM: " + WAM[`sub${subject}`];
     }
@@ -555,9 +555,7 @@ function rawToAligned(subNum) {
 
 function displayAligned(subNum, subName) {
     subjectHTML = document.getElementsByClassName("aligned " + subNum);
-
     subjectHTML[0].innerHTML = "Aligned: " + Math.round(aligned[subName]);
-    console.log(subjectHTML)
 }
 
 function displayBand() {
