@@ -201,13 +201,9 @@ function setWAMinLocalStorage() {
     storedWAM = localStorage.getItem("storedWAM")
 }
 
-
-
-
 function nanRemover(i) {
-
-    if (displayWAM[i-1].innerHTML == "WAM: " + NaN) {
-        displayWAM[i].innerHTML = "WAM: 0"
+    if (displayWAM[i-1].innerHTML.includes(NaN)) {
+        displayWAM[i-1].innerHTML = "WAM: 0"
     } else if (alignedValues[i-1][0].innerHTML.includes(NaN)) {
         aligned[i-1].innerHTML = "Aligned: 0"
     }
@@ -275,7 +271,7 @@ function storeInput(userInput) {
                             else {
                             weighting[`sub${i}`]["assessments"][`ass${j}`] = userInputValue;
                             getWeightedAverage(i);
-                            nanRemover();
+                            nanRemover(i);
                             }
                         }
     
