@@ -5,12 +5,13 @@ const subj4 = document.querySelector(".subject4");
 const subj5 = document.querySelector(".subject5");
 const subj6 = document.querySelector(".subject6");
 
-const aligned1 = document.querySelector(".aligned1");
-const aligned2 = document.querySelector(".aligned2");
-const aligned3 = document.querySelector(".aligned3");
-const aligned4 = document.querySelector(".aligned4");
-const aligned5 = document.querySelector(".aligned5");
-const aligned6 = document.querySelector(".aligned6");
+const aligned1 = document.getElementsByClassName("aligned 1");
+const aligned2 = document.getElementsByClassName("aligned 2");
+const aligned3 = document.getElementsByClassName("aligned 3");
+const aligned4 = document.getElementsByClassName("aligned 4");
+const aligned5 = document.getElementsByClassName("aligned 5");
+const aligned6 = document.getElementsByClassName("aligned 6");
+
 
 const subj1Name = document.querySelector(".subject1 select").value;
 const subj2Name = document.querySelector(".subject2 select").value;
@@ -144,6 +145,8 @@ let aligned = {
 const invalidChars = ["e", "+", "-", "Tab"];
 const subjectDivs = [subj1, subj2, subj3, subj4, subj5, subj6];
 const subjectNames = [subj1Name, subj2Name, subj3Name, subj4Name, subj5Name, subj6Name];
+const alignedValues = [aligned1, aligned2, aligned3, aligned4, aligned5, aligned6];
+
 
 // TO DOOOO
 
@@ -306,9 +309,6 @@ function rawToAligned(subNum) {
     subName = document.getElementById(`sub${subNum}`).value;
     storedWAM = JSON.parse(localStorage.getItem("storedWAM"));
     subWAM = storedWAM[`sub${subNum}`];
-    alignedMark = aligned[subName];
-
-    console.log(subName, subWAM);
 
     if (subName == "mathstd") {
         if (subWAM >= 90) {
@@ -416,7 +416,7 @@ function rawToAligned(subNum) {
         } else if (subWAM >= 67) {
             aligned[subName] = 0.580645*subWAM + 41.0968;
         } else {
-            aligned[subName] = 80*subNum/67;
+            aligned[subName] = 80*subWAM/67;
               }
     } else if (subName == "englishext1") {
         if (subWAM >= 90) {
@@ -545,8 +545,25 @@ function rawToAligned(subNum) {
 
               }
     }
-    console.log(aligned);
+
+    displayAligned(subNum, subName);
+    displayBand(subWAM);
+
+    //TO DO: MAKE IT SHOW UP ON SCREEN (WITHIN THE SAME THINGS AS BEFORE??)
 }
+
+
+function displayAligned(subNum, subName) {
+    subjectHTML = document.getElementsByClassName("aligned " + subNum);
+
+    subjectHTML[0].innerHTML = "Aligned: " + Math.round(aligned[subName]);
+    console.log(subjectHTML)
+}
+
+function displayBand() {
+
+}
+
 
 
 addKeyListener();

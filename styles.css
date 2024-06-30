@@ -4,7 +4,7 @@
     font-family: "Roboto";
 }
 
-.rawmarksInput {
+.rawmarksInput, .alignedmarks {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -51,7 +51,7 @@ body {
     width: 90vw;
 }
 
-input, select, .wam {
+input, select, .wam, .alignedmarks > div {
     background-color: rgb(39, 39, 39);
     color: rgb(255, 249, 241);
     border-radius: 4px;
@@ -59,7 +59,7 @@ input, select, .wam {
     outline-color: rgb(206, 206, 206);
     outline-width: 1px;
     border: none;
-    height: 28px;
+    height: 30px;
 }
 
 select, input {
@@ -68,7 +68,6 @@ select, input {
     outline-color: rgb(206, 206, 206);
     outline-width: 1px;
     border: none;
-    height: 28px;
     font-size: 15px;
 }
 
@@ -77,13 +76,12 @@ input {
     padding-left: 7px;
 }
 
-select {
-    height: 30px;
-}
-
-.wam {
-    height: 30px;
+.wam, .alignedmarks > div {
     box-sizing: border-box;
     padding: 5px;
     vertical-align:middle
+}
+
+.alignedmarks > div {
+    width: 160px;
 }
