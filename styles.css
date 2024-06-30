@@ -51,7 +51,7 @@ body {
     width: 90vw;
 }
 
-input, select, .wam, .alignedmarks > div {
+input, select, .wam, .aligned {
     background-color: rgb(39, 39, 39);
     color: rgb(255, 249, 241);
     border-radius: 4px;
@@ -76,12 +76,12 @@ input {
     padding-left: 7px;
 }
 
-.wam, .alignedmarks > div {
+.wam, .aligned {
     box-sizing: border-box;
     padding: 5px;
     vertical-align:middle
 }
 
-.alignedmarks > div {
-    width: 160px;
+.aligned {
+
 }
