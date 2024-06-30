@@ -201,12 +201,18 @@ function setWAMinLocalStorage() {
     storedWAM = localStorage.getItem("storedWAM")
 }
 
-function nanRemover() {
-    for (let i=0; i < 6; i++) {
-        if (displayWAM[i].innerHTML == "WAM: " + NaN) {
-            displayWAM[i].innerHTML = "WAM: 0"
-        }
+
+
+
+function nanRemover(i) {
+
+    if (displayWAM[i-1].innerHTML == "WAM: " + NaN) {
+        displayWAM[i].innerHTML = "WAM: 0"
+    } else if (alignedValues[i-1][0].innerHTML.includes(NaN)) {
+        aligned[i-1].innerHTML = "Aligned: 0"
     }
+    
+
 }
 
 function roundDisplay() {
@@ -253,7 +259,7 @@ function storeInput(userInput) {
                             else {
                                 rawMarks[`sub${i}`]["assessments"][`ass${j}`] = userInputValue;
                                 getWeightedAverage(i);
-                                nanRemover();
+                                nanRemover(i);
                             }
                         }
                     }
@@ -546,6 +552,7 @@ function rawToAligned(subNum) {
               }
     }
 
+    nanRemover(subNum);
     displayAligned(subNum, subName);
     displayBand(subWAM);
 
