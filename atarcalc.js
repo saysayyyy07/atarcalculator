@@ -205,7 +205,7 @@ function nanRemover(i) {
     if (displayWAM[i-1].innerHTML.includes(NaN)) {
         displayWAM[i-1].innerHTML = "WAM: 0"
     } else if (alignedValues[i-1][0].innerHTML.includes(NaN)) {
-        aligned[i-1].innerHTML = "Aligned: 0"
+        alignedValues[i-1][0].innerHTML = "Aligned: 0"
     }
     
 
