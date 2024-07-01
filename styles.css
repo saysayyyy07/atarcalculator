@@ -62,7 +62,7 @@ input::-webkit-inner-spin-button {
 }
 
 
-input, select, .wam, .aligned {
+input, select, .wam, .aligned, .band {
     background-color: rgb(39, 39, 39);
     color: rgb(255, 249, 241);
     border-radius: 4px;
@@ -72,16 +72,10 @@ input, select, .wam, .aligned {
     border: none;
     width: 160px;
     height: 30px;
-}
-
-select, input {
-    border-radius: 4px;
-    padding: 2px;
-    outline-color: rgb(206, 206, 206);
-    outline-width: 1px;
-    border: none;
     font-size: 15px;
 }
+
+
 
 input {
     box-sizing: border-box;
@@ -89,7 +83,7 @@ input {
     padding-left: 7px;
 }
 
-.wam, .aligned {
+.wam, .aligned, .band {
     box-sizing: border-box;
     padding: 5px;
     vertical-align: middle;
@@ -112,12 +106,9 @@ input {
     padding: 5px;
     border-radius: 6px;
     z-index: 1;
-    font-size: 14px;
-
-
+    font-size: 13px;
   }
   
-
   .tooltip:hover .tooltiptext {
     display: block;
   }
@@ -132,6 +123,8 @@ input {
 
 .supportedsubjects {
     color: rgba(255, 255, 255, 0.658);
+    width: 70vw;
+    font-size: 13px;
 }
 
 a {
