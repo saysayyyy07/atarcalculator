@@ -62,7 +62,7 @@ input::-webkit-inner-spin-button {
 }
 
 
-input, select, .wam, .aligned, .band {
+input, select, .wam, .aligned, .band, .scaled {
     background-color: rgb(39, 39, 39);
     color: rgb(255, 249, 241);
     border-radius: 4px;
@@ -83,7 +83,7 @@ input {
     padding-left: 7px;
 }
 
-.wam, .aligned, .band {
+.wam, .aligned, .band, .scaled {
     box-sizing: border-box;
     padding: 5px;
     vertical-align: middle;
