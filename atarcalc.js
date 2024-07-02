@@ -149,6 +149,10 @@ let WAM = {
 let aligned = {
 }
 
+let scaled = {
+
+}
+
 const invalidChars = ["e", "+", "-", "Tab"];
 const subjectDivs = [subj1, subj2, subj3, subj4, subj5, subj6];
 const subjectNames = [subj1Name, subj2Name, subj3Name, subj4Name, subj5Name, subj6Name];
@@ -320,6 +324,8 @@ function rawToAligned(subNum) {
     storedWAM = JSON.parse(localStorage.getItem("storedWAM"));
     subWAM = storedWAM[`sub${subNum}`];
 
+    // note: all aligned -> scaled is from 2023 uac scaling report.
+
     if (subName == "mathstd") {
         //2023 data
         if (subWAM >= 90) {
@@ -334,77 +340,51 @@ function rawToAligned(subNum) {
             aligned[subName] = 59*subWAM/32;
             }
     } else if (subName == "mathsadv") {
-        //2023 data
-        if (subWAM >= 79) {
-            aligned[subName] = (subWAM + 101)/2;
-        } else if (subWAM >= 60) {
-            aligned[subName] = 8*subWAM/15 + 48;
-        } else if (subWAM >= 41) {
-            aligned[subName] = (subWAM + 99)/2;
-        } else if (subWAM >= 22) {
-            aligned[subName] = subWAM/2 + 49;
-        } else if (subWAM >= 9.4) {
-            aligned[subName] = 7*subWAM/9 + 128/3;
-        } else {
-            aligned[subName] = 5*subWAM
-            }
+        //2023 data, raw to aligned
+        if (subWAM >= 79) aligned[subName] = (subWAM + 101)/2;
+        else if (subWAM >= 60) aligned[subName] = 8*subWAM/15 + 48;
+        else if (subWAM >= 41) aligned[subName] = (subWAM + 99)/2;
+        else if (subWAM >= 22) aligned[subName] = subWAM/2 + 49;
+        else if (subWAM >= 9.4) aligned[subName] = 7*subWAM/9 + 128/3;
+        else aligned[subName] = 5*subWAM;
+
+        
     } else if (subName == "mathsext1") {
         //2023 data
-        if (subWAM >= 64.29) {
-            aligned[subName] = 0.254615*subWAM + 73.6308;
-        } else if (subWAM >= 45.71) {
-            aligned[subName] = 1.04987*subWAM + 22.0105;
-        } else if (subWAM >= 20) {
-            aligned[subName] = 0.79328*subWAM + 33.8656;
-        } else {
-            aligned[subName] = 2.45184*subWAM + 0.469352;
-              }
+        if (subWAM >= 64.29) aligned[subName] = 0.254615*subWAM + 73.6308;
+        else if (subWAM >= 45.71) aligned[subName] = 1.04987*subWAM + 22.0105;
+        else if (subWAM >= 20) aligned[subName] = 0.79328*subWAM + 33.8656;
+        else aligned[subName] = 2.45184*subWAM + 0.469352;
+        
     } else if (subName == "mathsext2") {
         //2023 data
-        if (subWAM >= 66) {
-            aligned[subName] = 5*subWAM/17 + 1200/17;
-        } else if (subWAM >= 42) {
-            aligned[subName] = 10*subWAM/11 + 351/11;
-        } else if (subWAM >= 20) {
-            aligned[subName] = 9*subWAM/10 + 161/5;
-        } else {
-            aligned[subName] = 5*subWAM/2;
-              }
+        if (subWAM >= 66) aligned[subName] = 5*subWAM/17 + 1200/17;
+        else if (subWAM >= 42) aligned[subName] = 10*subWAM/11 + 351/11;
+        else if (subWAM >= 20) aligned[subName] = 9*subWAM/10 + 161/5;
+        else aligned[subName] = 5*subWAM/2;
+            
     } else if (subName == "biology") {
             //2022 data
-        if (subWAM >= 78) {
-            aligned[subName] = subWAM/2 + 51;
-        } else if (subWAM >= 65) {
-            aligned[subName] = 3*subWAM/4 + 125/4;
-        } else if (subWAM >= 52) {
-            aligned[subName] = 3*subWAM/4 + 125/4;
-        } else if (subWAM >= 38) {
-            aligned[subName] = 5*subWAM/7 + 230/7;
-        } else {
-            aligned[subName] = 30*subWAM/19;
-              }
+        if (subWAM >= 78) aligned[subName] = subWAM/2 + 51;
+        else if (subWAM >= 65) aligned[subName] = 3*subWAM/4 + 125/4;
+        else if (subWAM >= 52) aligned[subName] = 3*subWAM/4 + 125/4;
+        else if (subWAM >= 38) aligned[subName] = 5*subWAM/7 + 230/7;
+        else aligned[subName] = 30*subWAM/19;
+    
     } else if (subName == "chemistry") {
         //2023 data
-        if (subWAM >= 85) {
-            aligned[subName] = subWAM/2 + 95/2;
-        } else if (subWAM >= 72) {
-            aligned[subName] = 5*subWAM/7 + 200/7;
-        } else if (subWAM >= 55) {
-            aligned[subName] = 3*subWAM/5 + 37;
-        } else {
-            aligned[subName] = 14*subWAM/11;
-              }
+        if (subWAM >= 85) aligned[subName] = subWAM/2 + 95/2;
+        else if (subWAM >= 72) aligned[subName] = 5*subWAM/7 + 200/7;
+        else if (subWAM >= 55) aligned[subName] = 3*subWAM/5 + 37;
+        else aligned[subName] = 14*subWAM/11;
+    
     } else if (subName == "physics") {
         //2022 data
-        if (subWAM >= 89) {
-            aligned[subName] = 7*subWAM/8 + 97/8;
-        } else if (subWAM >= 74) {
-            aligned[subName] = 2*subWAM/3 + 92/3;
-        } else if (subWAM >= 54) {
-            aligned[subName] = subWAM/2 + 43;
-        } else {
-            aligned[subName] = 35*subWAM/27;
-              }
+        if (subWAM >= 89) aligned[subName] = 7*subWAM/8 + 97/8;
+        else if (subWAM >= 74) aligned[subName] = 2*subWAM/3 + 92/3;
+        else if (subWAM >= 54) aligned[subName] = subWAM/2 + 43;
+        else aligned[subName] = 35*subWAM/27;
+    
     } else if (subName == "englishstd") {
         if (subWAM >= 90) {
 
@@ -421,13 +401,10 @@ function rawToAligned(subNum) {
               }
     } else if (subName == "englishadv") {
         //2023 data
-        if (subWAM >= 85) {
-            aligned[subName] = 0.615385*subWAM + 37.7692;
-        } else if (subWAM >= 67) {
-            aligned[subName] = 0.580645*subWAM + 41.0968;
-        } else {
-            aligned[subName] = 80*subWAM/67;
-              }
+        if (subWAM >= 85) aligned[subName] = 0.615385*subWAM + 37.7692;
+        else if (subWAM >= 67) aligned[subName] = 0.580645*subWAM + 41.0968;
+        else aligned[subName] = 80*subWAM/67;
+            
     } else if (subName == "englishext1") {
         if (subWAM >= 90) {
 
@@ -458,72 +435,52 @@ function rawToAligned(subNum) {
               }
     } else if (subName == "economics") {
         //2023 data
-        if (subWAM >= 86.2) {
-            aligned[subName] = 0.761905*subWAM + 24.3333;
-        } else if (subWAM >= 67.4) {
-            aligned[subName] = 0.533333*subWAM + 44.2;
-        } else {
-            aligned[subName] = 1.18694*subWAM;
-              }
+        if (subWAM >= 86.2) aligned[subName] = 0.761905*subWAM + 24.3333;
+        else if (subWAM >= 67.4) aligned[subName] = 0.533333*subWAM + 44.2;
+        else aligned[subName] = 1.18694*subWAM;
+        
     } else if (subName == "business") {
         //2023 data (and slight but calculated assumption from 2022 data for band 5)
-        if (subWAM >= 84.5) {
-            aligned[subName] = 0.608696*subWAM + 38.5652;
-        } else if (subWAM >= 71) {
-            aligned[subName] = 0.740741*subWAM + 27.4074;
-        } else {
-            aligned[subName] = 80*subWAM/71;
-            }
+        if (subWAM >= 84.5) aligned[subName] = 0.608696*subWAM + 38.5652;
+        else if (subWAM >= 71) aligned[subName] = 0.740741*subWAM + 27.4074;
+        else aligned[subName] = 80*subWAM/71;
+        
     } else if (subName == "legal") {
         //2023 data
-        if (subWAM >= 84) {
-            aligned[subName] = 5*subWAM/8 + 75/2;
-        } else if (subWAM >= 71) {
-            aligned[subName] = 3*subWAM/4 + 107/4;
-        } else {
-            aligned[subName] = 80*subWAM/71;
-            }
+        if (subWAM >= 84) aligned[subName] = 5*subWAM/8 + 75/2;
+        else if (subWAM >= 71) aligned[subName] = 3*subWAM/4 + 107/4;
+        else aligned[subName] = 80*subWAM/71;
+    
     } else if (subName == "modernhis") {
         //2023 data
-        if (subWAM >= 79.3) {
-            aligned[subName] = 4*subWAM/9 + 54.7778;
-        } else if (subWAM >= 66.3) {
-            aligned[subName] = 0.769231*subWAM + 29;
-        } else {
-            aligned[subName] = 1.17483*subWAM;
-            }
+        if (subWAM >= 79.3) aligned[subName] = 4*subWAM/9 + 54.7778;
+        else if (subWAM >= 66.3) aligned[subName] = 0.769231*subWAM + 29;
+        else aligned[subName] = 1.17483*subWAM;
+    
     } else if (subName == "ancienthis") {
         //2023 data
-        if (subWAM >= 84.5) {
-            aligned[subName] = 0.645161*subWAM + 35.4839;
-        } else if (subWAM >= 69.5) {
-            aligned[subName] = 2*subWAM/3 + 33.6667;
-        } else {
-            aligned[subName] = 1.15108*subWAM;
-            }
+        if (subWAM >= 84.5) aligned[subName] = 0.645161*subWAM + 35.4839;
+        else if (subWAM >= 69.5) aligned[subName] = 2*subWAM/3 + 33.6667;
+        else aligned[subName] = 1.15108*subWAM;
+    
     } else if (subName == "sdd") {
         //2023 data
-        if (subWAM >= 85.6) {
-            aligned[subName] = 9*subWAM/13 + 400/13;
-        } else if (subWAM >= 71) {
-            aligned[subName] = 0.864932*subWAM + 31.3699;
-        } else {
-            aligned[subName] = 71*subWAM/80;
-            }
+        if (subWAM >= 85.6) aligned[subName] = 9*subWAM/13 + 400/13;
+        else if (subWAM >= 71) aligned[subName] = 0.864932*subWAM + 31.3699;
+        else aligned[subName] = 71*subWAM/80;
+        
     } else if (subName == "engineering") {
         //2022 data (low data, thus mildly inaccurate.)
-        if (subWAM >= 78.9) {
-            aligned[subName] = (9*subWAM + 1000)/19;
-        } else {
-            aligned[subName] = 1.14068*subWAM;
-            }
+        if (subWAM >= 78.9) aligned[subName] = (9*subWAM + 1000)/19;
+        else aligned[subName] = 1.14068*subWAM;
+    
     }
 
     nanRemover(subNum);
     displayAligned(subNum, subName);
     displayBand(subNum, subName);
 
-    //TO DO: MAKE IT SHOW UP ON SCREEN (WITHIN THE SAME THINGS AS BEFORE??)
+    alignedToScaled();
 }
 
 
@@ -539,6 +496,10 @@ function displayBand(subNum, subName) {
     else if (aligned[subName] >= 60) document.getElementsByClassName(`band ${subNum}`)[0].innerHTML = "Band 3";
     else if (aligned[subName] >= 50) document.getElementsByClassName(`band ${subNum}`)[0].innerHTML = "Band 2";
     else if (aligned[subName] > 0) document.getElementsByClassName(`band ${subNum}`)[0].innerHTML = "Band 1";
+}
+
+function alignedToScaled() {
+    
 }
 
 
