@@ -38,14 +38,12 @@ header {
     display: flex;
     gap: 15px;
     flex-wrap: wrap;
-
 }
     
 .rawmarkscontainer {
     align-items: center;
     justify-content: center;
     display: flex;
-    flex: auto;
     flex-direction: column;
     height: 99vh;
     width: fit-content;
@@ -84,7 +82,7 @@ input::-webkit-inner-spin-button {
 }
 
 
-input, select, .wam, .aligned, .band, .scaled, .atar{
+input, select, .wam, .aligned, .band, .scaled, .atar, button {
     background-color: rgb(39, 39, 39);
     color: rgb(255, 249, 241);
     border-radius: 4px;
@@ -97,6 +95,10 @@ input, select, .wam, .aligned, .band, .scaled, .atar{
     font-size: 15px;
 }
 
+.aligned, .band, .scaled {
+    display: none;
+}
+
 
 
 input {
@@ -105,7 +107,7 @@ input {
     padding-left: 7px;
 }
 
-.wam, .aligned, .band, .scaled, .atar {
+.wam, .aligned, .band, .scaled, .atar, button {
     box-sizing: border-box;
     padding: 5px;
     vertical-align: middle;
@@ -115,9 +117,12 @@ input {
     align-self: end;
     gap: 20px;
     display: flex;
+    justify-content: space-between;
     align-items: flex-end; 
     height: 80px;
 }
+
+
   
   .tooltip .tooltiptext {
     display: none;
@@ -129,11 +134,12 @@ input {
     border-radius: 6px;
     z-index: 1;
     font-size: 13px;
-  }
+    
+}
   
   .tooltip:hover .tooltiptext {
     display: block;
-  }
+}
 
 .questionmark {
     width: 25px;
@@ -141,6 +147,14 @@ input {
     background-color: white;
     border-radius: 100px;
     justify-self: flex-end;
+}
+
+.toolbar {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    align-items: center;
+    height: 20px;
 }
 
 .supportedsubjects {
@@ -169,3 +183,9 @@ h1, h3 {
 .calculationcontent, .otherinfocontent {
     margin-top: 50px;
 }
+
+button {
+    font-size: 14px;
+    width: fit-content;
+}
+

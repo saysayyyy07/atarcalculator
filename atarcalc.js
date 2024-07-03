@@ -32,10 +32,11 @@ const rawInputs = document.querySelectorAll("input #raw");
 const weightInputs = document.querySelectorAll("#weight");
 const userInputs = document.querySelectorAll("input");
 const displayWAM = document.querySelectorAll(".wam")
+const alignedDisplay = document.querySelectorAll(".aligned")
+const bandDisplay = document.querySelectorAll(".band")
+const scaledDisplay = document.querySelectorAll(".scaled")
 const atarDisplay = document.getElementsByClassName("atar");
-
-let firstNum = 0;
-let secondNum = 0;
+const advModeToggle = document.getElementsByClassName("advmodetoggle");
 
 let storedSubjects = {
     "sub1": "",
@@ -158,7 +159,8 @@ const invalidChars = ["e", "+", "-", "Tab"];
 const subjectDivs = [subj1, subj2, subj3, subj4, subj5, subj6];
 const subjectNames = [subj1Name, subj2Name, subj3Name, subj4Name, subj5Name, subj6Name];
 const alignedValues = [aligned1, aligned2, aligned3, aligned4, aligned5, aligned6];
-const bandValues = [band1, band2, band3, band4, band5, band6]
+const bandValues = [band1, band2, band3, band4, band5, band6];
+
 
 // TO DOOOO
 
@@ -528,7 +530,7 @@ function advancedCalculations(subNum) {
     };
 
     calculateAtar(aggregate);
-    }
+}
 
 
 function displayAligned(subNum, subName) {
@@ -565,6 +567,33 @@ function calculateAtar(agg) {
 
     atarDisplay[0].innerHTML = "Atar: " + (Math.round(atar / 0.05) * 0.05).toFixed(2);
 }
+
+
+
+    
+console.log(alignedDisplay)
+
+let advancedMode = false;
+advModeToggle[0].addEventListener("click", () => {
+    
+    
+    if (advancedMode == true) {
+        for (let i=0; i <= 5; i++) {
+            if (alignedDisplay[i] != undefined) alignedDisplay[i].style.display = "none";
+            if (scaledDisplay[i] != undefined) scaledDisplay[i].style.display = "none";
+            if (bandDisplay[i] != undefined) bandDisplay[i].style.display = "none";
+            }
+        advancedMode = false;
+    } else if (advancedMode == false) {
+        for (let i=0; i <= 5; i++) {
+        if (alignedDisplay[i] != undefined) alignedDisplay[i].style.display = "block";
+        if (scaledDisplay[i] != undefined) scaledDisplay[i].style.display = "block";
+        if (bandDisplay[i] != undefined) bandDisplay[i].style.display = "block";
+        }
+        advancedMode = true;
+    } 
+    
+})
 
 
 addKeyListener();
