@@ -1,0 +1,119 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atar Calculator - How it works</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            width: 98vw;
+        }
+    </style>
+</head>
+<body>
+    <header>
+        <a href="index.html" class="header calculator">Atar Calculator</a>
+        <a href="howitworks.html" class="header howitworks" style="border-bottom: solid;">How it works</a>
+        <a href="https://github.com/saysayyyy07/atarcalculator/issues" target="_blank" class="header feedback">Feedback</a>
+    </header>
+    <div class="main">
+        <h1>
+            The assumptions
+        </h1>
+        <p>Due to the nature of ATAR calculation, namely the invariably variable process of alignment, scaling, and internal mark calculation that changes year to year, a set of assumptions have been made by myself, and must be understood by you, to use this calculator in its most accurate and reliable state.
+            <br>
+            <br>
+            1. Your performance in the year 12 assessments is an accurate and reliable indicator of how you will perform in the HSC exam.
+            <br>
+            &nbsp&nbsp&nbsp
+            Your internal assessments may be harder, but are probably going to be easier, than the HSC exam. Keep this in mind when using the calculator.
+            <br>
+            <br>
+            2. The difficulty of HSC exams remains similar to the 2023 HSC exams.
+            <br>
+            &nbsp&nbsp&nbsp As the difficulty of HSC exams changes year to year, a different and unknowable set of scaling parameters will apply to calculate your atar. For maximum accuracy, we can approximate this difficulty by actually attempting the 2023 HSC papers, to discover where we would be positioned if we had completed the HSC last year.
+            <br>
+            <br>
+            3. Your internal rank (i.e. the rank given to you at the end of year 12) for each subject is the same as your external rank (i.e. how you perform relative to others in your cohort on the HSC exam).
+            <br>
+            &nbsp&nbsp&nbsp
+            This is relevant as your HSC mark that NESA uses is comprised equally of an internal mark, and an external mark, which themselves are closely related to your ranks. This is explained in more detail <a href="https://www.getatomi.com/blog/how-your-hsc-ranks-work-finally" target="_blank">here</a>.
+        </p>
+        <h1 class="calculationcontent">
+            The calculation
+        </h1>
+        <h3>An overview</h3>
+        <p>
+            An outline of the steps used to calculate the atar is as follows:
+            <br>
+            <br>
+            Your raw marks are "aligned" to an aligned mark. The sole purpose of this is to standardise the different marks across year groups, where the difficulty of each course changes. For example, a raw 70% for biology in a difficult 2022 HSC could be equivalent to a raw 85% for biology in the much easier 2023 HSC. i.e. they have the same <em>aligned marks</em>.
+            <br>
+            <br>
+            These aligned marks correspond to distinct desciptors, called "bands", ranging from 1-6. They are similar to the bands used in NAPLAN, that allow for easy classification of your aligned marks. The band cutoffs that NESA provides (that never change), are located <a href="https://www.nsw.gov.au/education-and-training/nesa/hsc/results-and-certificates/understanding-your-results/#toc-performance-bands" target=”_blank”>here</a>.
+            <br>
+            <br>
+            Your aligned marks are then "scaled" to a scaled mark. This is where the well-known and often misunderstood of "scaling" occurs. Some courses "scale up", in that the calculated scaled marks are higher than the inputted aligend marks, and others "scale down". Don't stress too much about this, as it isn't too relevant for most intents and purposes.
+            <br>
+            <br>
+            The scaled marks from your best 10 units of study (including your best two units of english) are then added together, to form an "aggregate".
+            <br>
+            <br>
+            This aggregate is then converted into an atar, with percentile-based transformations, that are publically available in the annual UAC scaling report.
+        </p>
+        <h3>Raw to aligned</h3>
+        <p>
+            To convert from your raw marks to aligned marks, up-to-date and verified data from <a href="https://rawmarks.info" target="_blank">rawmarks.info</a> was used.
+            It turns out, that the process of raw to aligned conversion is calculated through a piecewise-linear function.
+            That is, there is a simple linear equation between each band-cutoff (e.g. 60-70, 90-100), for each subject.
+            You can test this by heading over to rawmarks.info and using two furthest data points within a band (i.e. a raw 76 that aligns to 90, and a raw 93 that aligns to 99), to find the function in the form y = mx + b.
+            Then, test points between these two values and you'll find that all raw marks that you enter will give you the aligned marks available.
+            Outside of the known data on rawmarks.info, the calculator uses a simple linear graph from the lowest known band-cutoff, to the origin.
+            This allows for perfect accuracy within the known data points, and relatively strong accuracy outside of those points.
+            Thankfully, the data on rawmarks tends to be relatively dense, and most users will probably lay between the known data points anyways.
+        </p>
+        <h3>Aligned to scaled</h3>
+        <p>
+            Converting from aligned marks to scaled marks is an once again a set of simple linear equations.
+            The data for this is available in table A3 of the <a href="https://www.uac.edu.au/assets/documents/scaling-reports/preliminary-report-on-the-scaling-of-the-hsc.pdf">UAC scaling report</a>,
+            where the HSC mark is simply the average of the internal and external marks mentioned earlier, which based on our assumptions, are the same as the calculated aligned mark.
+            You can test this data by choosing a subject, and plotting the points on an online graphing calculator, and you'll find that they fit the aforementioned linear equation, that stretches from the 99th percentile down to the 25th percentile.
+            From here, another linear equation is used to calculate scores in the bottom 25th percentile, which is still fairly accurate.
+            Again however, most students interested in calculating their atars will not be in the bottom 25th percentile in the state, and thus the slight inaccuracies are borderline negligible.
+        </p>
+        <h3>Scaled to aggregate</h3>
+        <p>
+            This is trivially simple, literally just adding the best 10 units of scaled marks (including the best two units of english) together to form a number between 0 and 500.
+        </p>
+        <h3>Aggregate to ATAR</h3>
+        <p>
+            The data for the conversion from aggregate to ATAR is once again on the <a href="https://www.uac.edu.au/assets/documents/scaling-reports/preliminary-report-on-the-scaling-of-the-hsc.pdf">UAC scaling report</a>, in table A9.
+            This relationship <em>isn't</em> a linear equation. Thus, to convert from aggregate to atar, a set of polynomials was created using a series of Lagrange interpolations.
+            This was difficult to get perfect when including every data point, so polynomials were generated every 3-4 data points, with a 1 data point buffer on either side.
+            The resultant overlapping polynomials were averaged out to generate a piecewise function with a ± 0.0008 atar accuracy. Pretty dang accurate.
+            The resultant atar was then simply rounded to the nearest 0.05 (as all ATAR's are), and then displayed on screen.
+        </p>
+        
+        <h1 class="otherinfocontent">Other information</h1>
+        <p>
+        This ATAR calculator was influenced by <a href="https://boredofstudies.org/members/carrotsss.1611372236/">@carrotsss</a> on the Bored of Studies forum, who created a similar calculator using data from 2022, and housed it in a Google Sheet.
+        His calculator inspired me to create this one, with up-to-date data for the new cohort, and a slightly nicer design and user experience.
+        <br>
+        <br>
+        The supported subjects for both aligned & scaled marks, and ATAR calculation are (currently):
+        Maths (standard & advanced), maths ext1, maths ext2, physics, bio, chemistry, economics, business studies, legal studies, modern & ancient history, software design and development, engineering & english advanced.
+        <br>
+        <br>
+        To reiterate, please take this calculator as a guide only. This calculator isn't magic. It's a series of functions and polynomials that attempt to model what your ATAR should look like,
+        given the set of assumptions we established earlier. If you have any questions, or wish to report any bugs, head <a href="https://github.com/saysayyyy07/atarcalculator/issues">here</a> and open a "new issue".
+        <br>
+        <br>
+        Thanks guys, and good luck!
+        </p>
+    </div>
+    
+</body>
+</html>

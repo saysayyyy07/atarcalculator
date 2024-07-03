@@ -527,7 +527,6 @@ function advancedCalculations(subNum) {
         aggregate += 2*scaled[sub]
     };
 
-    displayAgg(aggregate);
     calculateAtar(aggregate);
     }
 
@@ -564,16 +563,9 @@ function calculateAtar(agg) {
     //60 > atar >= 0
     else atar = 63.3491 + 0.000262982 * Math.pow(829810 * Math.sqrt(1.07591e16 * agg**2 - 4.92512e18 * agg - 2.16206e19) - 8.60731e13 * agg + 1.97005e16, 1/3) + 1.94249e7 / Math.pow(829810 * Math.sqrt(1.07591e16 * agg**2 - 4.92512e18 * agg - 2.16206e19) - 8.60731e13 * agg + 1.97005e16, 1/3);
 
-    console.log(atar)
     atarDisplay[0].innerHTML = "Atar: " + (Math.round(atar / 0.05) * 0.05).toFixed(2);
-    console.log(atarDisplay)
 }
 
-
-
-function displayAgg() {
-
-}
 
 addKeyListener();
 addSelectListener();
