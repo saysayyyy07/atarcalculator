@@ -32,6 +32,7 @@ const rawInputs = document.querySelectorAll("input #raw");
 const weightInputs = document.querySelectorAll("#weight");
 const userInputs = document.querySelectorAll("input");
 const displayWAM = document.querySelectorAll(".wam")
+const atarDisplay = document.getElementsByClassName("atar");
 
 let firstNum = 0;
 let secondNum = 0;
@@ -189,7 +190,7 @@ window.onload = function populateInputs() {
             document.querySelector(`.subject${subNum} select`).value = subjects[`sub${subNum}`];
 
             displayWAMValue(subNum);
-            rawToAligned(subNum);
+            advancedCalculations(subNum);
             for (let assNum=1; assNum <= 4; assNum++) {
                 if (rawMarks[`sub${subNum}`] && rawMarks[`sub${subNum}`]["assessments"] && rawMarks[`sub${subNum}`]["assessments"][`ass${assNum}`]) {
                 document.getElementById(`subject${subNum} raw ass${assNum}`).value = rawMarks["sub" + subNum]["assessments"]["ass" + assNum];
@@ -246,7 +247,7 @@ function getWeightedAverage(i){
     displayWAMValue(i);
     setWAMinLocalStorage();
     setInputsinLocalStorage();
-    rawToAligned(i);
+    advancedCalculations(i);
 }
 
 function storeInput(userInput) {
@@ -314,11 +315,11 @@ function setSubjectNames(subject) {
     
     storedSubjects[`sub${subNum}`] = subName
     localStorage.setItem(`storedSubjects`, JSON.stringify(storedSubjects));
-    rawToAligned(subNum);
+    advancedCalculations(subNum);
     nanRemover(subNum);
 }
 
-function rawToAligned(subNum) {
+function advancedCalculations(subNum) {
     subName = document.getElementById(`sub${subNum}`).value;
     storedWAM = JSON.parse(localStorage.getItem("storedWAM"));
     subWAM = storedWAM[`sub${subNum}`];
@@ -513,11 +514,22 @@ function rawToAligned(subNum) {
         else scaled[subName] = 0.573529*aligned[subName]/2
     }
 
+
+    
+    
     nanRemover(subNum);
     displayAligned(subNum, subName);
     displayBand(subNum, subName);
     displayScaled(subNum, subName);
-}
+    
+    let aggregate = 0;
+    for (sub in scaled) {
+        aggregate += 2*scaled[sub]
+    };
+
+    displayAgg(aggregate);
+    calculateAtar(aggregate);
+    }
 
 
 function displayAligned(subNum, subName) {
@@ -539,8 +551,29 @@ function displayScaled(subNum, subName) {
     scaledHTML[0].innerHTML = "Scaled: " + 2*Math.round(scaled[subName]);
 }
 
+function calculateAtar(agg) {
+    let atar = 0;
+    //atar >= 99
+    if (agg >= 449.5) atar = 98.8913 + (1.83005 * 10**-8) * Math.sqrt((1.09287 * 10**14) * agg - (4.90888 * 10**16));
+    //atar >= 90
+    else if (agg >= 370) atar = 93.091 - 1.61884e-12 * Math.pow(5.07093e17 * Math.sqrt(6.42859e36 * agg**2 - 5.04749e39 * agg + 9.93538e41) - 1.28572e36 * agg + 5.04749e38, 1/3) + 1.44419e13 / Math.pow(5.07093e17 * Math.sqrt(6.42859e36 * agg**2 - 5.04749e39 * agg + 9.93538e41) - 1.28572e36 * agg + 5.04749e38, 1/3);
+    //atar >= 75
+    else if (agg >= 287.4) atar = 72.0002 - 0.000360563 * Math.pow(230940 * Math.sqrt(1.19999e15 * agg**2 - 6.53742e17 * agg + 1.05611e20) - 7.99996e12 * agg + 2.17914e15, 1/3) + 3.46032e6 / Math.pow(230940 * Math.sqrt(1.19999e15 * agg**2 - 6.53742e17 * agg + 1.05611e20) - 7.99996e12 * agg + 2.17914e15, 1/3);
+    //atar >= 60
+    else if (agg >= 212.5) atar = 100 + 7.73207e-7 * Math.pow(2.84822e7 * Math.sqrt(8.11233e28 * agg**2 - 6.82898e31 * agg - 6.5677e30) - 8.11233e21 * agg + 3.41449e24, 1/3) + 1.75353e10 / Math.pow(2.84822e7 * Math.sqrt(8.11233e28 * agg**2 - 6.82898e31 * agg - 6.5677e30) - 8.11233e21 * agg + 3.41449e24, 1/3);
+    //60 > atar >= 0
+    else atar = 63.3491 + 0.000262982 * Math.pow(829810 * Math.sqrt(1.07591e16 * agg**2 - 4.92512e18 * agg - 2.16206e19) - 8.60731e13 * agg + 1.97005e16, 1/3) + 1.94249e7 / Math.pow(829810 * Math.sqrt(1.07591e16 * agg**2 - 4.92512e18 * agg - 2.16206e19) - 8.60731e13 * agg + 1.97005e16, 1/3);
+
+    console.log(atar)
+    atarDisplay[0].innerHTML = "Atar: " + (Math.round(atar / 0.05) * 0.05).toFixed(2);
+    console.log(atarDisplay)
+}
 
 
+
+function displayAgg() {
+
+}
 
 addKeyListener();
 addSelectListener();

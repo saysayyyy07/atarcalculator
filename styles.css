@@ -8,7 +8,7 @@ body {
     display: flex;
     flex-direction: column;
     background-color: rgb(61, 61, 61);
-    height: 90vh;
+    height: 96vh;
     align-items: center;
 }
 
@@ -16,7 +16,7 @@ body {
     display: flex;
     gap: 15px;
     flex-wrap: wrap;
-    margin-bottom: 5vh;
+
 }
     
 .rawmarkscontainer {
@@ -62,7 +62,7 @@ input::-webkit-inner-spin-button {
 }
 
 
-input, select, .wam, .aligned, .band, .scaled {
+input, select, .wam, .aligned, .band, .scaled, .atar{
     background-color: rgb(39, 39, 39);
     color: rgb(255, 249, 241);
     border-radius: 4px;
@@ -83,7 +83,7 @@ input {
     padding-left: 7px;
 }
 
-.wam, .aligned, .band, .scaled {
+.wam, .aligned, .band, .scaled, .atar {
     box-sizing: border-box;
     padding: 5px;
     vertical-align: middle;
@@ -99,7 +99,7 @@ input {
   
   .tooltip .tooltiptext {
     display: none;
-    width: 350px;
+    width: 500px;
     background-color: rgb(39, 39, 39);
     color: #fff;
     text-align: center;
@@ -123,8 +123,8 @@ input {
 
 .supportedsubjects {
     color: rgba(255, 255, 255, 0.658);
-    width: 70vw;
-    font-size: 13px;
+    width: 75vw;
+    font-size: 12px;
 }
 
 a {
