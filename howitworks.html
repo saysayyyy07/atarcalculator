@@ -82,7 +82,7 @@
         <h3>Aligned to scaled</h3>
         <p>
             Converting from aligned marks to scaled marks is an once again a set of simple linear equations.
-            The data for this is available in table A3 of the <a href="https://www.uac.edu.au/assets/documents/scaling-reports/preliminary-report-on-the-scaling-of-the-hsc.pdf">UAC scaling report</a>,
+            The data for this is available in table A3 of the <a href="https://www.uac.edu.au/assets/documents/scaling-reports/preliminary-report-on-the-scaling-of-the-hsc.pdf" target="_blank">UAC scaling report</a>,
             where the HSC mark is simply the average of the internal and external marks mentioned earlier, which based on our assumptions, are the same as the calculated aligned mark.
             You can test this data by choosing a subject, and plotting the points on an online graphing calculator, and you'll find that they fit the aforementioned linear equation, that stretches from the 99th percentile down to the 25th percentile.
             From here, another linear equation is used to calculate scores in the bottom 25th percentile, which is still fairly accurate.
@@ -94,7 +94,7 @@
         </p>
         <h3>Aggregate to ATAR</h3>
         <p>
-            The data for the conversion from aggregate to ATAR is once again on the <a href="https://www.uac.edu.au/assets/documents/scaling-reports/preliminary-report-on-the-scaling-of-the-hsc.pdf">UAC scaling report</a>, in table A9.
+            The data for the conversion from aggregate to ATAR is once again on the <a href="https://www.uac.edu.au/assets/documents/scaling-reports/preliminary-report-on-the-scaling-of-the-hsc.pdf" target="_blank">UAC scaling report</a>, in table A9.
             This relationship <em>isn't</em> a linear equation. Thus, to convert from aggregate to atar, a set of polynomials was created using a series of Lagrange interpolations.
             This was difficult to get perfect when including every data point, so polynomials were generated every 3-4 data points, with a 1 data point buffer on either side.
             The resultant overlapping polynomials were averaged out to generate a piecewise function with a ± 0.0008 atar accuracy. Pretty dang accurate.
@@ -103,7 +103,7 @@
         
         <h1 class="otherinfocontent">Other information</h1>
         <p>
-        This ATAR calculator was influenced by <a href="https://boredofstudies.org/members/carrotsss.1611372236/">@carrotsss</a> on the Bored of Studies forum, who created a similar calculator using data from 2022, and housed it in a Google Sheet.
+        This ATAR calculator was influenced by <a href="https://boredofstudies.org/members/carrotsss.1611372236/" target="_blank">@carrotsss</a> on the Bored of Studies forum, who created a similar calculator using data from 2022, and housed it in a Google Sheet.
         His calculator inspired me to create this one, with up-to-date data for the new cohort, and a slightly nicer design and user experience.
         <br>
         <br>
@@ -112,7 +112,7 @@
         <br>
         <br>
         To reiterate, please take this calculator as a guide only. This calculator isn't magic. It's a series of functions and polynomials that attempt to model what your ATAR should look like,
-        given the set of assumptions we established earlier. If you have any questions, or wish to report any bugs, head <a href="https://github.com/saysayyyy07/atarcalculator/issues">here</a> and open a "new issue".
+        given the set of assumptions we established earlier. If you have any questions, or wish to report any bugs, head <a href="https://github.com/saysayyyy07/atarcalculator/issues" target="_blank">here</a> and open a "new issue".
         <br>
         <br>
         Thanks guys, and good luck!

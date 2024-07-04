@@ -331,24 +331,30 @@ function addSelectListener() {
             setSubjectNames(e);
         })
     }
+
 }
 
 function setSubjectNames(subject) {
     subNum = subject.target.id[3];
     subName = subject.target.value
     
-    storedSubjects[`sub${subNum}`] = subName
+    storedSubjects[`sub${subNum}`] = subName;
     localStorage.setItem(`storedSubjects`, JSON.stringify(storedSubjects));
+    refreshSubjects();
+    getWeightedAverage(subNum);
     advancedCalculations(subNum);
     nanRemover(subNum);
+    console.log()
 }
+
+
 
 function advancedCalculations(subNum) {
     subName = document.getElementById(`sub${subNum}`).value;
     storedWAM = JSON.parse(localStorage.getItem("storedWAM"));
     subWAM = storedWAM[`sub${subNum}`];
-
-    // note: all aligned -> scaled is from 2023 uac scaling report.
+    refreshSubjects();    
+    // note: all aligned -> scaled data is from 2023 uac scaling report.
 
     if (subName == "mathsstd") {
         //2023 data
@@ -539,16 +545,12 @@ function advancedCalculations(subNum) {
     }
 
 
-    
-    
     nanRemover(subNum);
     displayAligned(subNum, subName);
     displayBand(subNum, subName);
     displayScaled(subNum, subName);
     
-    let aggregate = calculateAgg();
-
-    calculateAtar(aggregate);
+    calculateAgg();
 }
 
 function displayAligned(subNum, subName) {
@@ -587,19 +589,24 @@ function calculateAtar(agg) {
 }
 
 function calculateAgg() {
-    aggregate = 0;
 
     scaledSorted = Object.fromEntries(
-    Object.entries(scaled).sort(([keyA, valueA], [keyB , valueB]) => valueB - valueA));
-    
+        Object.entries(scaled).sort(([keyA, valueA], [keyB , valueB]) => valueB - valueA));
+        
+    let aggregate = 0;
     let countedUnits = 0;
+
     
+    if ("englishadv" in scaledSorted) {
+        countedUnits += 2;
+        aggregate += 2*scaled["englishadv"];
+    } else if ("englishstd" in scaledSorted) {
+        countedUnits += 2;
+        aggregate += 2*scaled["englishadv"];
+    }
     for (sub in scaledSorted) {
         if (countedUnits == 10 || countedUnits == 11) break;
-        else if (sub == "englishadv") {
-            countedUnits += 2;
-            aggregate += 2*scaled[sub];
-        }
+        if (sub == "englishadv" || sub == "englishstd") break;
         else if (sub == "mathsext1" && !"mathsext2" in scaledSorted) {
             countedUnits += 1;
             aggregate += scaled[sub];}
@@ -614,5 +621,22 @@ function calculateAgg() {
             aggregate += 2*scaled[sub];}
     }
 
-    return aggregate;
+
+    console.log(aggregate)
+
+    calculateAtar(aggregate);
 }
+
+
+function refreshSubjects() {
+    const allSubjects = document.querySelectorAll("select");
+    let acceptedSubjects = []
+    for (subject in allSubjects) {
+        acceptedSubjects += allSubjects[subject].value;
+    }
+
+    for (sub in scaled) {
+        if (!acceptedSubjects.includes(sub)) delete scaled[sub];
+    }
+}
+
