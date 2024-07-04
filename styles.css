@@ -11,6 +11,7 @@ body {
     background-color: rgb(54, 54, 54);
     height: 96vh;
     align-items: center;
+    overflow-x: hidden;
 }
 
 header {
@@ -187,5 +188,13 @@ h1, h3 {
 button {
     font-size: 14px;
     width: fit-content;
+}
+
+.atar {
+    font-size: 20px;
+    line-height: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
 }
 

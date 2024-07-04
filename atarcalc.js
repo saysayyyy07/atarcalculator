@@ -160,6 +160,7 @@ const subjectDivs = [subj1, subj2, subj3, subj4, subj5, subj6];
 const subjectNames = [subj1Name, subj2Name, subj3Name, subj4Name, subj5Name, subj6Name];
 const alignedValues = [aligned1, aligned2, aligned3, aligned4, aligned5, aligned6];
 const bandValues = [band1, band2, band3, band4, band5, band6];
+let advancedMode = false;
 
 
 // TO DOOOO
@@ -203,6 +204,27 @@ window.onload = function populateInputs() {
             }
         }
     }
+    advModeToggle[0].addEventListener("click", () => {  
+        if (advancedMode == true) {
+            for (let i=0; i <= 5; i++) {
+                if (alignedDisplay[i] != undefined) alignedDisplay[i].style.display = "none";
+                if (scaledDisplay[i] != undefined) scaledDisplay[i].style.display = "none";
+                if (bandDisplay[i] != undefined) bandDisplay[i].style.display = "none";
+                }
+            advancedMode = false;
+        } else if (advancedMode == false) {
+            for (let i=0; i <= 5; i++) {
+            if (alignedDisplay[i] != undefined) alignedDisplay[i].style.display = "block";
+            if (scaledDisplay[i] != undefined) scaledDisplay[i].style.display = "block";
+            if (bandDisplay[i] != undefined) bandDisplay[i].style.display = "block";
+            }
+            advancedMode = true;
+        } 
+        
+    })
+
+    addKeyListener();
+    addSelectListener();
 }
 
 function setInputsinLocalStorage() {
@@ -524,14 +546,10 @@ function advancedCalculations(subNum) {
     displayBand(subNum, subName);
     displayScaled(subNum, subName);
     
-    let aggregate = 0;
-    for (sub in scaled) {
-        aggregate += 2*scaled[sub]
-    };
+    let aggregate = calculateAgg();
 
     calculateAtar(aggregate);
 }
-
 
 function displayAligned(subNum, subName) {
     subjectHTML = document.getElementsByClassName("aligned " + subNum);
@@ -568,33 +586,33 @@ function calculateAtar(agg) {
     atarDisplay[0].innerHTML = "Atar: " + (Math.round(atar / 0.05) * 0.05).toFixed(2);
 }
 
+function calculateAgg() {
+    aggregate = 0;
 
-
+    scaledSorted = Object.fromEntries(
+    Object.entries(scaled).sort(([keyA, valueA], [keyB , valueB]) => valueB - valueA));
     
-console.log(alignedDisplay)
-
-let advancedMode = false;
-advModeToggle[0].addEventListener("click", () => {
+    let countedUnits = 0;
     
-    
-    if (advancedMode == true) {
-        for (let i=0; i <= 5; i++) {
-            if (alignedDisplay[i] != undefined) alignedDisplay[i].style.display = "none";
-            if (scaledDisplay[i] != undefined) scaledDisplay[i].style.display = "none";
-            if (bandDisplay[i] != undefined) bandDisplay[i].style.display = "none";
-            }
-        advancedMode = false;
-    } else if (advancedMode == false) {
-        for (let i=0; i <= 5; i++) {
-        if (alignedDisplay[i] != undefined) alignedDisplay[i].style.display = "block";
-        if (scaledDisplay[i] != undefined) scaledDisplay[i].style.display = "block";
-        if (bandDisplay[i] != undefined) bandDisplay[i].style.display = "block";
+    for (sub in scaledSorted) {
+        if (countedUnits == 10 || countedUnits == 11) break;
+        else if (sub == "englishadv") {
+            countedUnits += 2;
+            aggregate += 2*scaled[sub];
         }
-        advancedMode = true;
-    } 
-    
-})
+        else if (sub == "mathsext1" && !"mathsext2" in scaledSorted) {
+            countedUnits += 1;
+            aggregate += scaled[sub];}
+        else if (sub == "englishext1") {
+            countedUnits += 1;
+            aggregate += scaled[sub];}
+        else if (sub == "englishext2") {
+            countedUnits += 1;
+            aggregate += scaled[sub];}
+        else {
+            countedUnits += 2;
+            aggregate += 2*scaled[sub];}
+    }
 
-
-addKeyListener();
-addSelectListener();
+    return aggregate;
+}
