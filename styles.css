@@ -83,7 +83,7 @@ input::-webkit-inner-spin-button {
 }
 
 
-input, select, .wam, .aligned, .band, .scaled, .atar, button {
+input, select, .wam, .aligned, .band, .scaled, .atar, button, .equivalent {
     background-color: rgb(39, 39, 39);
     color: rgb(255, 249, 241);
     border-radius: 4px;
@@ -96,7 +96,7 @@ input, select, .wam, .aligned, .band, .scaled, .atar, button {
     font-size: 15px;
 }
 
-.aligned, .band, .scaled {
+.aligned, .band, .scaled, .equivalent {
     display: none;
 }
 
@@ -108,7 +108,7 @@ input {
     padding-left: 7px;
 }
 
-.wam, .aligned, .band, .scaled, .atar, button {
+.wam, .aligned, .band, .scaled, .atar, button, .equivalent {
     box-sizing: border-box;
     padding: 5px;
     vertical-align: middle;

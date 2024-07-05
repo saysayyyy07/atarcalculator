@@ -31,11 +31,12 @@ const subNames = document.querySelectorAll("select");
 const rawInputs = document.querySelectorAll("input #raw");
 const weightInputs = document.querySelectorAll("#weight");
 const userInputs = document.querySelectorAll("input");
-const displayWAM = document.querySelectorAll(".wam")
-const alignedDisplay = document.querySelectorAll(".aligned")
-const bandDisplay = document.querySelectorAll(".band")
-const scaledDisplay = document.querySelectorAll(".scaled")
-const atarDisplay = document.getElementsByClassName("atar");
+const displayWAM = document.querySelectorAll(".wam");
+const alignedDisplay = document.querySelectorAll(".aligned");
+const bandDisplay = document.querySelectorAll(".band");
+const scaledDisplay = document.querySelectorAll(".scaled");
+const atarEquivDisplay = document.querySelectorAll(".equivalent");
+const atarDisplay = document.querySelector(".atar");
 const advModeToggle = document.getElementsByClassName("advmodetoggle");
 
 let storedSubjects = {
@@ -210,6 +211,7 @@ window.onload = function populateInputs() {
                 if (alignedDisplay[i] != undefined) alignedDisplay[i].style.display = "none";
                 if (scaledDisplay[i] != undefined) scaledDisplay[i].style.display = "none";
                 if (bandDisplay[i] != undefined) bandDisplay[i].style.display = "none";
+                if (atarEquivDisplay[i] != undefined) atarEquivDisplay[i].style.display = "none";
                 }
             advancedMode = false;
         } else if (advancedMode == false) {
@@ -217,6 +219,7 @@ window.onload = function populateInputs() {
             if (alignedDisplay[i] != undefined) alignedDisplay[i].style.display = "block";
             if (scaledDisplay[i] != undefined) scaledDisplay[i].style.display = "block";
             if (bandDisplay[i] != undefined) bandDisplay[i].style.display = "block";
+            if (atarEquivDisplay[i] != undefined) atarEquivDisplay[i].style.display = "block";
             }
             advancedMode = true;
         } 
@@ -241,7 +244,11 @@ function nanRemover(i) {
     if (displayWAM[i-1].innerHTML.includes(NaN)) {
         displayWAM[i-1].innerHTML = "WAM: 0"
     } else if (alignedValues[i-1][0].innerHTML.includes(NaN)) {
-        alignedValues[i-1][0].innerHTML = "Aligned: 0"
+        alignedValues[i-1][0].innerHTML = "Aligned: 0";
+    }  else if (scaledDisplay[i-1].innerHTML.includes(NaN)) {
+        scaledDisplay[i-1][0].innerHTML = "Scaled: 0";
+    } else if (atarEquivDisplay[i-1].innerHTML.includes(NaN)) {
+        atarEquivDisplay[i-1].innerHTML = "Atar Equivalent: 0";
     }
 }
 
@@ -346,8 +353,6 @@ function setSubjectNames(subject) {
     nanRemover(subNum);
     console.log()
 }
-
-
 
 function advancedCalculations(subNum) {
     subName = document.getElementById(`sub${subNum}`).value;
@@ -551,6 +556,8 @@ function advancedCalculations(subNum) {
     displayScaled(subNum, subName);
     
     calculateAgg();
+
+    displayEquivalent(subNum, subName);
 }
 
 function displayAligned(subNum, subName) {
@@ -572,9 +579,18 @@ function displayScaled(subNum, subName) {
     scaledHTML[0].innerHTML = "Scaled: " + 2*Math.round(scaled[subName]);
 }
 
+function displayEquivalent(subNum, subName) {
+    equivalentHTML = document.getElementsByClassName("equivalent " + subNum);
+    console.log(equivalentHTML)
+    console.log("the scaled mark for this subject is: " + scaled[subName])
+    atar = calculateAtar(10*scaled[subName]);
+    equivalentHTML[0].innerHTML = "Atar Equivalent: " + (Math.round(atar / 0.05) * 0.05).toFixed(2);
+}
+
 function calculateAtar(agg) {
     let atar = 0;
     //atar >= 99
+    console.log(agg)
     if (agg >= 449.5) atar = 98.8913 + (1.83005 * 10**-8) * Math.sqrt((1.09287 * 10**14) * agg - (4.90888 * 10**16));
     //atar >= 90
     else if (agg >= 370) atar = 93.091 - 1.61884e-12 * Math.pow(5.07093e17 * Math.sqrt(6.42859e36 * agg**2 - 5.04749e39 * agg + 9.93538e41) - 1.28572e36 * agg + 5.04749e38, 1/3) + 1.44419e13 / Math.pow(5.07093e17 * Math.sqrt(6.42859e36 * agg**2 - 5.04749e39 * agg + 9.93538e41) - 1.28572e36 * agg + 5.04749e38, 1/3);
@@ -585,7 +601,12 @@ function calculateAtar(agg) {
     //60 > atar >= 0
     else atar = 63.3491 + 0.000262982 * Math.pow(829810 * Math.sqrt(1.07591e16 * agg**2 - 4.92512e18 * agg - 2.16206e19) - 8.60731e13 * agg + 1.97005e16, 1/3) + 1.94249e7 / Math.pow(829810 * Math.sqrt(1.07591e16 * agg**2 - 4.92512e18 * agg - 2.16206e19) - 8.60731e13 * agg + 1.97005e16, 1/3);
 
-    atarDisplay[0].innerHTML = "Atar: " + (Math.round(atar / 0.05) * 0.05).toFixed(2);
+    if (atar > 99.95) atar = 99.95;
+
+    console.log(atarDisplay)
+    
+    console.log(atar)
+    return atar
 }
 
 function calculateAgg() {
@@ -621,12 +642,10 @@ function calculateAgg() {
             aggregate += 2*scaled[sub];}
     }
 
+    atar = calculateAtar(aggregate);
+    atarDisplay.innerHTML = "Atar: " + (Math.round(atar / 0.05) * 0.05).toFixed(2);
 
-    console.log(aggregate)
-
-    calculateAtar(aggregate);
 }
-
 
 function refreshSubjects() {
     const allSubjects = document.querySelectorAll("select");
