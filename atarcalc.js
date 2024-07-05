@@ -551,8 +551,11 @@ function advancedCalculations(subNum) {
     displayBand(subNum, subName);
     displayScaled(subNum, subName);
     
+    console.log("normal atar")
     calculateAgg();
+    console.log("atar is: " + atar)
 
+    console.log("below is displaying equiv")
     displayEquivalent(subNum, subName);
 }
 
@@ -576,18 +579,35 @@ function displayScaled(subNum, subName) {
 }
 
 function displayEquivalent(subNum, subName) {
+    let atarequiv = 0;
+    agg = 10*scaled[subName];
     equivalentHTML = document.getElementsByClassName("equivalent " + subNum);
-    console.log(equivalentHTML)
-    console.log("the scaled mark for this subject is: " + scaled[subName])
-    atar = calculateAtar(10*scaled[subName]);
-    equivalentHTML[0].innerHTML = "Atar Equivalent: " + (Math.round(atar / 0.05) * 0.05).toFixed(2);
+
+    //atar >= 99
+    if (agg >= 449.5) atarequiv = 98.8913 + (1.83005 * 10**-8) * Math.sqrt((1.09287 * 10**14) * agg - (4.90888 * 10**16));
+    //atar >= 90
+    else if (agg >= 370) atarequiv = 93.091 - 1.61884e-12 * Math.pow(5.07093e17 * Math.sqrt(6.42859e36 * agg**2 - 5.04749e39 * agg + 9.93538e41) - 1.28572e36 * agg + 5.04749e38, 1/3) + 1.44419e13 / Math.pow(5.07093e17 * Math.sqrt(6.42859e36 * agg**2 - 5.04749e39 * agg + 9.93538e41) - 1.28572e36 * agg + 5.04749e38, 1/3);
+    //atar >= 75
+    else if (agg >= 287.4) atarequiv = 72.0002 - 0.000360563 * Math.pow(230940 * Math.sqrt(1.19999e15 * agg**2 - 6.53742e17 * agg + 1.05611e20) - 7.99996e12 * agg + 2.17914e15, 1/3) + 3.46032e6 / Math.pow(230940 * Math.sqrt(1.19999e15 * agg**2 - 6.53742e17 * agg + 1.05611e20) - 7.99996e12 * agg + 2.17914e15, 1/3);
+    //atar >= 60
+    else if (agg >= 212.5) atarequiv = 100 + 7.73207e-7 * Math.pow(2.84822e7 * Math.sqrt(8.11233e28 * agg**2 - 6.82898e31 * agg - 6.5677e30) - 8.11233e21 * agg + 3.41449e24, 1/3) + 1.75353e10 / Math.pow(2.84822e7 * Math.sqrt(8.11233e28 * agg**2 - 6.82898e31 * agg - 6.5677e30) - 8.11233e21 * agg + 3.41449e24, 1/3);
+    //60 > atar >= 0
+    else atarequiv = 63.3491 + 0.000262982 * Math.pow(829810 * Math.sqrt(1.07591e16 * agg**2 - 4.92512e18 * agg - 2.16206e19) - 8.60731e13 * agg + 1.97005e16, 1/3) + 1.94249e7 / Math.pow(829810 * Math.sqrt(1.07591e16 * agg**2 - 4.92512e18 * agg - 2.16206e19) - 8.60731e13 * agg + 1.97005e16, 1/3);
+
+    if (atarequiv > 99.95) atarequiv = 99.95;
+
+    equivalentHTML[0].innerHTML = "Atar Equivalent: " + (Math.round(atarequiv / 0.05) * 0.05).toFixed(2);
 }
 
 function calculateAtar(agg) {
     let atar = 0;
     //atar >= 99
-    console.log(agg)
-    if (agg >= 449.5) atar = 98.8913 + (1.83005 * 10**-8) * Math.sqrt((1.09287 * 10**14) * agg - (4.90888 * 10**16));
+    console.log("new calculate atar")
+    console.log("aggregate: " + agg)
+    if (agg >= 449.5) {
+        console.log("big agg")
+        atar = 98.8913 + (1.83005 * 10**-8) * Math.sqrt((1.09287 * 10**14) * agg - (4.90888 * 10**16))
+    }
     //atar >= 90
     else if (agg >= 370) atar = 93.091 - 1.61884e-12 * Math.pow(5.07093e17 * Math.sqrt(6.42859e36 * agg**2 - 5.04749e39 * agg + 9.93538e41) - 1.28572e36 * agg + 5.04749e38, 1/3) + 1.44419e13 / Math.pow(5.07093e17 * Math.sqrt(6.42859e36 * agg**2 - 5.04749e39 * agg + 9.93538e41) - 1.28572e36 * agg + 5.04749e38, 1/3);
     //atar >= 75
@@ -599,9 +619,6 @@ function calculateAtar(agg) {
 
     if (atar > 99.95) atar = 99.95;
 
-    console.log(atarDisplay)
-    
-    console.log(atar)
     return atar
 }
 
@@ -614,16 +631,16 @@ function calculateAgg() {
     let countedUnits = 0;
 
     
-    if ("englishadv" in scaledSorted) {
-        countedUnits += 2;
-        aggregate += 2*scaled["englishadv"];
-    } else if ("englishstd" in scaledSorted) {
-        countedUnits += 2;
-        aggregate += 2*scaled["englishadv"];
-    }
+
     for (sub in scaledSorted) {
         if (countedUnits == 10 || countedUnits == 11) break;
-        if (sub == "englishadv" || sub == "englishstd") break;
+        if (sub == "englishadv") {
+            countedUnits += 2;
+            aggregate += 2*scaled["englishadv"];
+        } else if (sub == "englishstd") {
+            countedUnits += 2;
+            aggregate += 2*scaled["englishstd"];
+        }
         else if (sub == "mathsext1" && !"mathsext2" in scaledSorted) {
             countedUnits += 1;
             aggregate += scaled[sub];}
@@ -640,6 +657,7 @@ function calculateAgg() {
 
     atar = calculateAtar(aggregate);
     atarDisplay.innerHTML = "Atar: " + (Math.round(atar / 0.05) * 0.05).toFixed(2);
+    console.log("calculated atar is: " + atar)
 
 }
 
