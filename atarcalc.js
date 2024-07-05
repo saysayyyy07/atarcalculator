@@ -436,19 +436,15 @@ function advancedCalculations(subNum) {
         else scaled[subName] = 0.710448*aligned[subName]/2;
     
     } else if (subName == "englishstd") {
-        if (subWAM >= 90) {
+        //2022 data
+        if (subWAM >= 91.5) aligned[subName] = 4*subWAM/3 - 32;
+        else if (subWAM >= 75.5) aligned[subName] = 0.625*subWAM + 32.8125;
+        else if (subWAM >= 60) aligned[subName] = 0.645161*subWAM + 31.2903;
+        else aligned[subName] = 7*subWAM/6;
 
-        } else if (subWAM >= 80) {
+        if (aligned[subName]/2 >= 32.5) scaled[subName] = 2.19333*aligned[subName]/2 - 57.4833;
+        else scaled[subName] = 0.424615*aligned[subName]/2;
 
-        } else if (subWAM >= 70) {
-    
-        } else if (subWAM >= 60) {
-
-        } else if (subWAM >= 50) {
-
-        } else {
-
-              }
     } else if (subName == "englishadv") {
         //2023 data
         if (subWAM >= 85) aligned[subName] = 0.615385*subWAM + 37.7692;
