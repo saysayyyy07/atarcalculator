@@ -351,7 +351,6 @@ function setSubjectNames(subject) {
     getWeightedAverage(subNum);
     advancedCalculations(subNum);
     nanRemover(subNum);
-    console.log()
 }
 
 function advancedCalculations(subNum) {
@@ -551,11 +550,8 @@ function advancedCalculations(subNum) {
     displayBand(subNum, subName);
     displayScaled(subNum, subName);
     
-    console.log("normal atar")
     calculateAgg();
-    console.log("atar is: " + atar)
 
-    console.log("below is displaying equiv")
     displayEquivalent(subNum, subName);
 }
 
@@ -602,12 +598,7 @@ function displayEquivalent(subNum, subName) {
 function calculateAtar(agg) {
     let atar = 0;
     //atar >= 99
-    console.log("new calculate atar")
-    console.log("aggregate: " + agg)
-    if (agg >= 449.5) {
-        console.log("big agg")
-        atar = 98.8913 + (1.83005 * 10**-8) * Math.sqrt((1.09287 * 10**14) * agg - (4.90888 * 10**16))
-    }
+    if (agg >= 449.5) atar = 98.8913 + (1.83005 * 10**-8) * Math.sqrt((1.09287 * 10**14) * agg - (4.90888 * 10**16));
     //atar >= 90
     else if (agg >= 370) atar = 93.091 - 1.61884e-12 * Math.pow(5.07093e17 * Math.sqrt(6.42859e36 * agg**2 - 5.04749e39 * agg + 9.93538e41) - 1.28572e36 * agg + 5.04749e38, 1/3) + 1.44419e13 / Math.pow(5.07093e17 * Math.sqrt(6.42859e36 * agg**2 - 5.04749e39 * agg + 9.93538e41) - 1.28572e36 * agg + 5.04749e38, 1/3);
     //atar >= 75
@@ -657,8 +648,6 @@ function calculateAgg() {
 
     atar = calculateAtar(aggregate);
     atarDisplay.innerHTML = "Atar: " + (Math.round(atar / 0.05) * 0.05).toFixed(2);
-    console.log("calculated atar is: " + atar)
-
 }
 
 function refreshSubjects() {
