@@ -86,6 +86,7 @@ input::-webkit-inner-spin-button {
 select {
     -webkit-appearance: none;
     -moz-appearance: none;
+    appearance: none;
     background: url(dropdown\ icon.png) no-repeat 100% 50%;
     padding-left: 7px;
     background-size: 14px;
