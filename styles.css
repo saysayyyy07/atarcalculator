@@ -83,7 +83,24 @@ input::-webkit-inner-spin-button {
 }
 
 
-input, select, .wam, .aligned, .band, .scaled, .atar, button, .equivalent {
+select {
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    background: url(dropdown\ icon.png) no-repeat 100% 50%;
+    padding-left: 7px;
+    background-size: 14px;
+    background-color: rgb(39, 39, 39);
+    color: rgb(255, 249, 241);
+    border-radius: 4px;
+    outline-color: rgb(206, 206, 206);
+    outline-width: 1px;
+    border: none;
+    width: 160px;
+    height: 30px;
+    font-size: 15px;
+}
+
+input, .wam, .aligned, .band, .scaled, .atar, button, .equivalent {
     background-color: rgb(39, 39, 39);
     color: rgb(255, 249, 241);
     border-radius: 4px;
