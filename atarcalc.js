@@ -19,7 +19,6 @@ const band4 = document.getElementsByClassName("band 4");
 const band5 = document.getElementsByClassName("band 5");
 const band6 = document.getElementsByClassName("band 6");
 
-
 const subj1Name = document.querySelector(".subject1 select").value;
 const subj2Name = document.querySelector(".subject2 select").value;
 const subj3Name = document.querySelector(".subject3 select").value;
@@ -149,12 +148,9 @@ let WAM = {
     "sub6": 0,
 }
 
-let aligned = {
-}
+let aligned = {}
 
-let scaled = {
-
-}
+let scaled = {}
 
 const invalidChars = ["e", "+", "-", "Tab"];
 const subjectDivs = [subj1, subj2, subj3, subj4, subj5, subj6];
@@ -171,8 +167,6 @@ let advancedMode = false;
 // remove if alr chosen
 // 4u and 3u linked.
 // add/remove subjects
-// on change subject, clear inputs/wam
-// nicer CSS
 // add/remove assessments (per sub or everything?)
 
 
@@ -576,28 +570,11 @@ function displayScaled(subNum, subName) {
 
 function displayEquivalent(subNum, subName) {
     let atarequiv = 0;
-    agg = 10*scaled[subName];
+    aggregate = 10*scaled[subName];
+
+    atarequiv = calculateAtar(aggregate);
+
     equivalentHTML = document.getElementsByClassName("equivalent " + subNum);
-
-    //atar >= 99
-    if (agg >= 449.5) atarequiv = 98.8913 + (1.83005 * 10**-8) * Math.sqrt((1.09287 * 10**14) * agg - (4.90888 * 10**16));
-    //atar >= 90
-    else if (agg >= 370) atarequiv = 93.091 - 1.61884e-12 * Math.pow(5.07093e17 * Math.sqrt(6.42859e36 * agg**2 - 5.04749e39 * agg + 9.93538e41) - 1.28572e36 * agg + 5.04749e38, 1/3) + 1.44419e13 / Math.pow(5.07093e17 * Math.sqrt(6.42859e36 * agg**2 - 5.04749e39 * agg + 9.93538e41) - 1.28572e36 * agg + 5.04749e38, 1/3);
-    //atar >= 75
-    else if (agg >= 287.4) atarequiv = 72.0002 - 0.000360563 * Math.pow(230940 * Math.sqrt(1.19999e15 * agg**2 - 6.53742e17 * agg + 1.05611e20) - 7.99996e12 * agg + 2.17914e15, 1/3) + 3.46032e6 / Math.pow(230940 * Math.sqrt(1.19999e15 * agg**2 - 6.53742e17 * agg + 1.05611e20) - 7.99996e12 * agg + 2.17914e15, 1/3);
-    //atar >= 60
-    else if (agg >= 212.5) atarequiv = 100 + 7.73207e-7 * Math.pow(2.84822e7 * Math.sqrt(8.11233e28 * agg**2 - 6.82898e31 * agg - 6.5677e30) - 8.11233e21 * agg + 3.41449e24, 1/3) + 1.75353e10 / Math.pow(2.84822e7 * Math.sqrt(8.11233e28 * agg**2 - 6.82898e31 * agg - 6.5677e30) - 8.11233e21 * agg + 3.41449e24, 1/3);
-    //60 > atar >= 0
-    else {
-        console.log(scaled[subName])
-        console.log(agg)
-        console.log("hella bad " + subName)
-        atarequiv = 63.3491 + 0.000262982 * Math.pow(829810 * Math.sqrt(1.07591e16 * agg**2 - 4.92512e18 * agg - 2.16206e19) - 8.60731e13 * agg + 1.97005e16, 1/3) + 1.94249e7 / Math.pow(829810 * Math.sqrt(1.07591e16 * agg**2 - 4.92512e18 * agg - 2.16206e19) - 8.60731e13 * agg + 1.97005e16, 1/3)
-        console.log(atarequiv)
-    };
-
-    if (atarequiv > 99.95) atarequiv = 99.95;
-
     equivalentHTML[0].innerHTML = "Atar Equivalent: " + (Math.round(atarequiv / 0.05) * 0.05).toFixed(2);
 }
 
@@ -612,11 +589,9 @@ function calculateAtar(agg) {
     //atar >= 60
     else if (agg >= 212.5) atar = 100 + 7.73207e-7 * Math.pow(2.84822e7 * Math.sqrt(8.11233e28 * agg**2 - 6.82898e31 * agg - 6.5677e30) - 8.11233e21 * agg + 3.41449e24, 1/3) + 1.75353e10 / Math.pow(2.84822e7 * Math.sqrt(8.11233e28 * agg**2 - 6.82898e31 * agg - 6.5677e30) - 8.11233e21 * agg + 3.41449e24, 1/3);
     //60 > atar >= 0
-    else atar = 63.3491 + 0.000262982 * Math.pow(829810 * Math.sqrt(1.07591e16 * agg**2 - 4.92512e18 * agg - 2.16206e19) - 8.60731e13 * agg + 1.97005e16, 1/3) + 1.94249e7 / Math.pow(829810 * Math.sqrt(1.07591e16 * agg**2 - 4.92512e18 * agg - 2.16206e19) - 8.60731e13 * agg + 1.97005e16, 1/3);
+    else atar = 2.0421373632670e-6 * agg**3 - 0.00122525 * agg**2 + 0.450504 * agg;    
 
-    if (atar > 99.95) atar = 99.95;
-
-    return atar
+    return Math.min(atar, 99.95);
 }
 
 function calculateAgg() {
@@ -652,7 +627,7 @@ function calculateAgg() {
             aggregate += 2*scaled[sub];}
     }
 
-    atar = calculateAtar(aggregate);
+    atar = calculateAtar(aggregate, sub);
     atarDisplay.innerHTML = "Atar: " + (Math.round(atar / 0.05) * 0.05).toFixed(2);
 }
 
@@ -667,4 +642,3 @@ function refreshSubjects() {
         if (!acceptedSubjects.includes(sub)) delete scaled[sub];
     }
 }
-

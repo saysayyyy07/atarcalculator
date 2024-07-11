@@ -105,7 +105,7 @@ input, .wam, .aligned, .band, .scaled, .atar, button, .equivalent {
     background-color: rgb(39, 39, 39);
     color: rgb(255, 249, 241);
     border-radius: 4px;
-    /* padding: 2px; */
+    padding: 2px;
     border: none;
     width: 160px;
     height: 30px;
