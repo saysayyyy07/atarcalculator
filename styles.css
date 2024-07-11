@@ -124,6 +124,13 @@ input {
     padding-left: 7px;
 }
 
+select:focus {
+    outline: none !important;
+    border: solid;
+    border-color: rgb(214, 214, 214);
+    border-width: 3px;
+}
+
 input:focus {
     outline: none !important;
     padding-left: 4px;
