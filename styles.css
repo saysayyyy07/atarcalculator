@@ -105,9 +105,7 @@ input, .wam, .aligned, .band, .scaled, .atar, button, .equivalent {
     background-color: rgb(39, 39, 39);
     color: rgb(255, 249, 241);
     border-radius: 4px;
-    padding: 2px;
-    outline-color: rgb(206, 206, 206);
-    outline-width: 1px;
+    /* padding: 2px; */
     border: none;
     width: 160px;
     height: 30px;
@@ -125,6 +123,14 @@ input {
     width: 75px;
     padding-left: 7px;
 }
+
+input:focus {
+    outline: none !important;
+    padding-left: 4px;
+    border: solid;
+    border-color: rgb(214, 214, 214);
+    border-width: 3px;
+} 
 
 .wam, .aligned, .band, .scaled, .atar, button, .equivalent {
     box-sizing: border-box;
