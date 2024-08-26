@@ -587,7 +587,7 @@ function calculateAtar(agg) {
     //atar >= 75
     else if (agg >= 287.4) atar = 72.0002 - 0.000360563 * Math.pow(230940 * Math.sqrt(1.19999e15 * agg**2 - 6.53742e17 * agg + 1.05611e20) - 7.99996e12 * agg + 2.17914e15, 1/3) + 3.46032e6 / Math.pow(230940 * Math.sqrt(1.19999e15 * agg**2 - 6.53742e17 * agg + 1.05611e20) - 7.99996e12 * agg + 2.17914e15, 1/3);
     //atar >= 60
-    else if (agg >= 212.5) atar = 100 + 7.73207e-7 * Math.pow(2.84822e7 * Math.sqrt(8.11233e28 * agg**2 - 6.82898e31 * agg - 6.5677e30) - 8.11233e21 * agg + 3.41449e24, 1/3) + 1.75353e10 / Math.pow(2.84822e7 * Math.sqrt(8.11233e28 * agg**2 - 6.82898e31 * agg - 6.5677e30) - 8.11233e21 * agg + 3.41449e24, 1/3);
+    else if (agg >= 212.5) atar = 3.234188422495 * 10**-7 * agg**3 - 0.000346846 * agg**2 + 0.312585 * agg + 6.13456;
     //60 > atar >= 0
     else atar = 2.0421373632670e-6 * agg**3 - 0.00122525 * agg**2 + 0.450504 * agg;    
 
@@ -642,3 +642,5 @@ function refreshSubjects() {
         if (!acceptedSubjects.includes(sub)) delete scaled[sub];
     }
 }
+
+
