@@ -523,7 +523,7 @@ function advancedCalculations(subNum) {
     } else if (subName == "sdd") {
         //2023 data
         if (subWAM >= 85.6) aligned[subName] = 9*subWAM/13 + 400/13;
-        else if (subWAM >= 71) aligned[subName] = 0.864932*subWAM + 31.3699;
+        else if (subWAM >= 71) aligned[subName] = 0.684932*subWAM + 31.3699;
         else aligned[subName] = 71*subWAM/80;
         
         if (aligned[subName]/2 >= 33) scaled[subName] = 1.93939*aligned[subName]/2 - 46;
