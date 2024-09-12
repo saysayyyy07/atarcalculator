@@ -527,7 +527,7 @@ function advancedCalculations(subNum) {
         else aligned[subName] = 71*subWAM/80;
         
         if (aligned[subName]/2 >= 33) scaled[subName] = 1.93939*aligned[subName]/2 - 46;
-        else scaled[subName] = 6*aligned[subName]/2/11;
+        else scaled[subName] = 6*aligned[subName]/11;
 
     } else if (subName == "engineering") {
         //2022 data (low data, thus mildly inaccurate.)
@@ -536,6 +536,15 @@ function advancedCalculations(subNum) {
     
         if (aligned[subName]/2 >= 34) scaled[subName] = 1.87097*aligned[subName]/2 - 44.1129;
         else scaled[subName] = 0.573529*aligned[subName]/2
+    } else if (subName == "pdh") {
+        //2023 data, raw to aligned
+        if (subWAM >= 77) aligned[subName] = (10*subWAM + 1300)/23;
+        else if (subWAM >= 65) aligned[subName] = (5*subWAM + 155)/6;
+        else aligned[subName] = 16*subWAM/13;
+
+        if (aligned[subName]/2 >= 33) scaled[subName] = 2.11852*aligned[subName]/2 - 55.8111;
+        else scaled[subName] = 0.427273*aligned[subName]/2;
+        
     }
 
 
