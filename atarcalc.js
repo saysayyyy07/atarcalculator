@@ -607,31 +607,41 @@ function calculateAgg() {
 
     scaledSorted = Object.fromEntries(
         Object.entries(scaled).sort(([keyA, valueA], [keyB , valueB]) => valueB - valueA));
-        
+
     let aggregate = 0;
     let countedUnits = 0;
 
-    
+    if ("englishadv" in scaledSorted) {
+        countedUnits += 2
+        aggregate += 2*scaled["englishadv"];
+    } if ("englishstd" in scaledSorted) {
+        countedUnits += 2
+        aggregate += 2*scaled["englishstd"];
+    } if ("englishext1" in scaledSorted) {
+        countedUnits += 1
+        aggregate += 2*scaled["englishext1"];
+    } if ("englishext2" in scaledSorted) {
+        countedUnits += 1
+        aggregate += 2*scaled["englishext2"];
+    }
+
 
     for (sub in scaledSorted) {
-        if (countedUnits == 10 || countedUnits == 11) break;
-        if (sub == "englishadv") {
-            countedUnits += 2;
-            aggregate += 2*scaled["englishadv"];
-        } else if (sub == "englishstd") {
-            countedUnits += 2;
-            aggregate += 2*scaled["englishstd"];
+        if (countedUnits == 10) break;
+        if (countedUnits == 9) {
+            aggregate += scaled[sub];
+            break;
         }
-        else if (sub == "mathsext1" && !"mathsext2" in scaledSorted) {
+
+        if (sub == "englishadv" || 
+            sub == "englishstd" || 
+            sub == "englishext1" || 
+            sub == "englishext2") {
+            //do nothing
+        } else if (sub == "mathsext1" && !("mathsext2" in scaledSorted)) {
             countedUnits += 1;
-            aggregate += scaled[sub];}
-        else if (sub == "englishext1") {
-            countedUnits += 1;
-            aggregate += scaled[sub];}
-        else if (sub == "englishext2") {
-            countedUnits += 1;
-            aggregate += scaled[sub];}
-        else {
+            aggregate += scaled[sub];
+        } else {
             countedUnits += 2;
             aggregate += 2*scaled[sub];}
     }
