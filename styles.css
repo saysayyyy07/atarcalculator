@@ -6,11 +6,13 @@
     
 body {
     margin: 0;
+    min-height: 96vh;
     display: flex;
+    flex: auto;
     flex-direction: column;
     background-color: rgb(54, 54, 54);
-    height: 96vh;
     align-items: center;
+    justify-content: space-between;
     overflow-x: hidden;
 }
 
@@ -41,14 +43,17 @@ header {
     flex-wrap: wrap;
 }
     
+
 .rawmarkscontainer {
+    flex-grow: 5;
     align-items: center;
     justify-content: center;
     display: flex;
     flex-direction: column;
-    height: 99vh;
-    width: fit-content;
+    margin: 20px;
+    box-sizing: border-box;
     gap: 50px;
+    
 }
 
 .subject1, 
@@ -75,13 +80,10 @@ header {
     gap: 4px 10px;
 }
 
-
-
 input::-webkit-outer-spin-button,
 input::-webkit-inner-spin-button {
 -webkit-appearance: none;
 }
-
 
 select {
     -webkit-appearance: none;
@@ -115,8 +117,6 @@ input, .wam, .aligned, .band, .scaled, .atar, button, .equivalent {
 .aligned, .band, .scaled, .equivalent {
     display: none;
 }
-
-
 
 input {
     box-sizing: border-box;
@@ -153,8 +153,6 @@ input:focus {
     align-items: flex-end; 
     height: 80px;
 }
-
-
   
   .tooltip .tooltiptext {
     display: none;
