@@ -41,18 +41,22 @@ header {
     display: flex;
     gap: 15px;
     flex-wrap: wrap;
+    justify-content: center;
 }
     
 
 .rawmarkscontainer {
     flex-grow: 5;
     align-items: center;
+    justify-items: center;
     justify-content: center;
     display: flex;
     flex-direction: column;
     margin: 20px;
     box-sizing: border-box;
     gap: 50px;
+    z-index: 0;
+    position: relative;
     
 }
 
@@ -151,20 +155,17 @@ input:focus {
     display: flex;
     justify-content: space-between;
     align-items: flex-end; 
-    height: 80px;
 }
   
   .tooltip .tooltiptext {
     display: none;
-    width: 500px;
+    width: 60vw;
     background-color: rgb(39, 39, 39);
     color: #fff;
     text-align: center;
     padding: 5px;
     border-radius: 6px;
-    z-index: 1;
-    font-size: 13px;
-    
+    font-size: 13px;    
 }
   
   .tooltip:hover .tooltiptext {
