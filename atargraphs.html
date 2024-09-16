@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en"></html>
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Atar Calculator - Graphs</title>
+    <link rel="icon" href="android-chrome-192x192.pngf">
+    <link rel="stylesheet" href="styles.css">
+    <script src="graph.js" defer></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <meta name="google-site-verification" content="tbprM7il7dxEwdFQxa30pe-G1GQWrUof5f71ZVZ_94o" />
+</head>
+
+<body>
+    <header>
+        <a href="index.html" class="header calculator">Atar Calculator</a>
+        <a href="atargraphs.html" class="header graphs" style="border-bottom: solid;">Graphs</a>
+        <a href="howitworks.html" class="header howitworks">How it works</a>
+        <a href="https://github.com/saysayyyy07/atarcalculator/issues" target="_blank" class="header feedback">Feedback</a>
+    </header>
+
+    <div class="graphContainer">
+        <select name="subjectselector" id="graphSubjectSelector">
+            <option value="" selected disabled>Select a subject</option>
+            <option value="mathsstd">Maths (Standard)</option>
+            <option value="mathsadv">Maths (Advanced)</option>
+            <option value="mathsext1">Maths Ext 1</option>
+            <option value="mathsext2">Maths Ext 2</option>
+            <option value="biology">Biology</option>
+            <option value="chemistry">Chemistry</option>
+            <option value="physics">Physics</option>
+            <option value="englishstd">English (Standard)</option>
+            <option value="englishadv">English (Advanced)</option>
+            <option value="englishext1">English Ext 1</option>
+            <option value="englishext2">English Ext 2</option>
+            <option value="economics">Economics</option>
+            <option value="business">Business Studies</option>
+            <option value="legal">Legal Studies</option>
+            <option value="modernhis">Modern History</option>
+            <option value="ancienthis">Ancient History</option>
+            <option value="sdd">SDD</option>
+            <option value="engineering">Engineering Studies</option>
+            <option value="pdh">PDHPE</option>
+        </select>
+        <canvas id="myChart" style="position: relative; height:50vh; width:70vw">
+            
+        </canvas>
+    </div>
+</body>
