@@ -9,8 +9,7 @@ graphSubjectSelector.addEventListener("change", (e) => {
         console.log(graphSubjectSelector.value)
         generateDataPoints(graphSubjectSelector.value);
     }
-})
-
+});
 
 function generateChart(rawMarksArray, atarEquivArray) {
     new Chart(myChart, {
@@ -274,8 +273,7 @@ function calculateAtar(agg) {
     //60 > atar >= 0
     else atar = 2.0421373632670e-6 * agg**3 - 0.00122525 * agg**2 + 0.450504 * agg;    
 
-    return Math.min(atar, 99.95);
+    return Math.min((Math.round(atar / 0.05) * 0.05).toFixed(2), 99.95);
 }
-
 
 generateDataPoints();
