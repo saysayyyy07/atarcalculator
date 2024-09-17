@@ -4,6 +4,7 @@ const graphContainer = document.getElementsByClassName("graphContainer");
 const lowerBound = document.getElementsByClassName("lowerbound")[0];
 const upperBound = document.getElementsByClassName("upperbound")[0];
 const generateGraphButton = document.querySelector(".generateGraph");
+const inputs = document.querySelectorAll("input")
 
 let rawMarksArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100];
 let atarEquivArray = [];
@@ -24,7 +25,38 @@ generateGraphButton.addEventListener("click", (e) => {
     chartStatus.destroy();
     generateDataPoints(graphSubjectSelector.value);
     
-})
+});
+
+
+// [lowerBound, upperBound].forEach(function(element) {
+//     element.addEventListener("input", (e) => {
+//         let lowerBoundInt = parseInt(lowerBound.value);
+//         let upperBoundInt = parseInt(upperBound.value);
+
+//         if (lowerBoundInt >= upperBoundInt) return alert("Please ensure the lower bound < upper bound.");
+//         if (lowerBoundInt < 0) return alert("Please ensure the lower bound >= 0");
+//         if (upperBoundInt > 100) return alert ("Please ensure the upper bound is <= 100");
+//         calculateXBounds(lowerBoundInt, upperBoundInt);
+
+//         let chartStatus = Chart.getChart("myChart")
+//         if (graphSubjectSelector.value == "") return alert ("Please select a subject before generating the graph.");
+//         if (chartStatus == undefined) return;
+            
+//         chartStatus.destroy();
+//         generateDataPoints(graphSubjectSelector.value);
+//         }
+//     )
+// })
+
+
+// graphSubjectSelector.addEventListener("change", (e) => {
+//     let chartStatus = Chart.getChart("myChart")
+//     if (graphSubjectSelector.value == "") return alert ("Please select a subject before generating the graph.");
+//     if (chartStatus == undefined) return;
+    
+//     chartStatus.destroy();
+//     generateDataPoints(graphSubjectSelector.value);
+// })
 
 
 
@@ -62,6 +94,7 @@ function generateChart(rawMarksArray, atarEquivArray) {
               beginAtZero: true
             },
             y: {
+                min: Math.max(0, 100 - 1.125*(atarEquivArray[atarEquivArray.length - 1] - atarEquivArray[0])),
                 title: {
                     display: true,
                     text: "Atar Equivalent",
@@ -74,17 +107,23 @@ function generateChart(rawMarksArray, atarEquivArray) {
           }
         }
       });
+
 }
 
 function generateDataPoints(selectedSubject) {
-    if (selectedSubject == undefined) return generateChart();
+    if (selectedSubject == undefined) return generateChart(rawMarksArray, atarEquivArray);
+    generateXArray(selectedSubject);
+    console.log(atarEquivArray)
+    atarEquivArray.push(100);
+    generateChart(rawMarksArray, atarEquivArray);
+}
+
+function generateXArray(selectedSubject) {
     for (let mark = 0; mark < rawMarksArray.length; mark++ ) {
         let MARK = rawToAlignedToScaled(selectedSubject, rawMarksArray[mark]);
         let atarEquiv = calculateAtar(10*MARK[1]);
         atarEquivArray.push(atarEquiv);
     }
-    atarEquivArray.push(100);
-    generateChart(rawMarksArray, atarEquivArray);
 }
 
 function rawToAlignedToScaled(subName, rawMark) {
@@ -183,6 +222,8 @@ function rawToAlignedToScaled(subName, rawMark) {
         else scaledMark = 0.705128*(alignedMark/2);
             
     } else if (subName == "englishext1") {
+        //no data yet
+        return [0, 0]
         if (rawMark >= 90) {
 
         } else if (rawMark >= 80) {
@@ -197,8 +238,9 @@ function rawToAlignedToScaled(subName, rawMark) {
 
               }
     } else if (subName == "englishext2") {
+        //no data yet
+        return [0, 0]
         if (rawMark >= 90) {
-
         } else if (rawMark >= 80) {
 
         } else if (rawMark >= 70) {
