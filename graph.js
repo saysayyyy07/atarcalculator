@@ -1,15 +1,40 @@
 const myChart = document.getElementById("myChart");
 const graphSubjectSelector = document.getElementById("graphSubjectSelector");
 const graphContainer = document.getElementsByClassName("graphContainer");
+const lowerBound = document.getElementsByClassName("lowerbound")[0];
+const upperBound = document.getElementsByClassName("upperbound")[0];
+const generateGraphButton = document.querySelector(".generateGraph");
 
-graphSubjectSelector.addEventListener("change", (e) => {
+let rawMarksArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100];
+let atarEquivArray = [];
+
+
+generateGraphButton.addEventListener("click", (e) => {
+    lowerBoundInt = parseInt(lowerBound.value);
+    upperBoundInt = parseInt(upperBound.value);
+    if (lowerBoundInt >= upperBoundInt) return alert("Please ensure the lower bound < upper bound.");
+    if (lowerBoundInt < 0) return alert("Please ensure the lower bound >= 0");
+    if (upperBoundInt > 100) return alert ("Please ensure the upper bound is <= 100");
+    calculateXBounds(lowerBoundInt, upperBoundInt);
+
     let chartStatus = Chart.getChart("myChart")
-    if (chartStatus != undefined) {
-        chartStatus.destroy();
-        console.log(graphSubjectSelector.value)
-        generateDataPoints(graphSubjectSelector.value);
+    if (graphSubjectSelector.value == "") return alert ("Please select a subject before generating the graph.");
+    if (chartStatus == undefined) return;
+    
+    chartStatus.destroy();
+    generateDataPoints(graphSubjectSelector.value);
+    
+})
+
+
+
+function calculateXBounds(lower, upper) {
+    rawMarksArray = [];
+    atarEquivArray = [];
+    for (i = lower; i <= upper; i++) {
+        rawMarksArray.push(i);
     }
-});
+}
 
 function generateChart(rawMarksArray, atarEquivArray) {
     new Chart(myChart, {
@@ -53,10 +78,8 @@ function generateChart(rawMarksArray, atarEquivArray) {
 
 function generateDataPoints(selectedSubject) {
     if (selectedSubject == undefined) return generateChart();
-    let rawMarksArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100];
-    let atarEquivArray = [];
-    for (mark in rawMarksArray) {
-        let MARK = rawToAlignedToScaled(selectedSubject, mark);
+    for (let mark = 0; mark < rawMarksArray.length; mark++ ) {
+        let MARK = rawToAlignedToScaled(selectedSubject, rawMarksArray[mark]);
         let atarEquiv = calculateAtar(10*MARK[1]);
         atarEquivArray.push(atarEquiv);
     }
@@ -65,6 +88,7 @@ function generateDataPoints(selectedSubject) {
 }
 
 function rawToAlignedToScaled(subName, rawMark) {
+    if (subName == "") return [0, 0];
     if (subName == "mathsstd") {
         //2023 data
         if (rawMark >= 90) alignedMark = rawMark;

@@ -20,28 +20,33 @@
     </header>
 
     <div class="graphContainer">
-        <select name="subjectselector" id="graphSubjectSelector">
-            <option value="" selected disabled>Select a subject</option>
-            <option value="mathsstd">Maths (Standard)</option>
-            <option value="mathsadv">Maths (Advanced)</option>
-            <option value="mathsext1">Maths Ext 1</option>
-            <option value="mathsext2">Maths Ext 2</option>
-            <option value="biology">Biology</option>
-            <option value="chemistry">Chemistry</option>
-            <option value="physics">Physics</option>
-            <option value="englishstd">English (Standard)</option>
-            <option value="englishadv">English (Advanced)</option>
-            <option value="englishext1">English Ext 1</option>
-            <option value="englishext2">English Ext 2</option>
-            <option value="economics">Economics</option>
-            <option value="business">Business Studies</option>
-            <option value="legal">Legal Studies</option>
-            <option value="modernhis">Modern History</option>
-            <option value="ancienthis">Ancient History</option>
-            <option value="sdd">SDD</option>
-            <option value="engineering">Engineering Studies</option>
-            <option value="pdh">PDHPE</option>
-        </select>
+        <div class="graphConfig">
+            <select name="subjectselector" id="graphSubjectSelector">
+                <option value="" selected disabled>Select a subject</option>
+                <option value="mathsstd">Maths (Standard)</option>
+                <option value="mathsadv">Maths (Advanced)</option>
+                <option value="mathsext1">Maths Ext 1</option>
+                <option value="mathsext2">Maths Ext 2</option>
+                <option value="biology">Biology</option>
+                <option value="chemistry">Chemistry</option>
+                <option value="physics">Physics</option>
+                <option value="englishstd">English (Standard)</option>
+                <option value="englishadv">English (Advanced)</option>
+                <option value="englishext1">English Ext 1</option>
+                <option value="englishext2">English Ext 2</option>
+                <option value="economics">Economics</option>
+                <option value="business">Business Studies</option>
+                <option value="legal">Legal Studies</option>
+                <option value="modernhis">Modern History</option>
+                <option value="ancienthis">Ancient History</option>
+                <option value="sdd">SDD</option>
+                <option value="engineering">Engineering Studies</option>
+                <option value="pdh">PDHPE</option>
+            </select>
+            <input type="number" class="lowerbound" placeholder="Lower bound">
+            <input type="number" class="upperbound" placeholder="Upper bound">
+            <button class="generateGraph">Generate graph</button>
+        </div>
         <canvas id="myChart" style="position: relative; height:50vh; width:70vw">
             
         </canvas>
