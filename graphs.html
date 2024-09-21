@@ -14,13 +14,16 @@
             display: flex;
             align-items: center;
             justify-content: space-between;
-            
         }
 
         input {
             width: 100px;
         }
 
+        .container {
+            display: flex;
+            gap: 5px;
+        }
     </style>
 </head>
 
@@ -57,13 +60,30 @@
                     <option value="engineering">Engineering Studies</option>
                     <option value="pdh">PDHPE</option>
                 </select>
-                <input type="number" class="lowerbound" placeholder="Lower bound" value="0">
-                <input type="number" class="upperbound" placeholder="Upper bound" value="100">
+                <div class="advancedConfig">
+                    <input type="number" class="lowerbound" placeholder="Lower bound" value="0">
+                    <input type="number" class="upperbound" placeholder="Upper bound" value="100">
+                    <select name="selectAxis" id="xAxis">
+                        <option value="" selected disabled>X Axis</option>
+                        <option value="rawMark">Raw Mark</option>
+                        <option value="alignedMark">Aligned Mark</option>
+                        <option value="scaledMark">Scaled Mark</option>
+                        <option value="atarEquiv">Atar Equivalent</option>
+                    </select>
+                    <select name="selectAxis" id="yAxis">
+                        <option value="" selected disabled>Y Axis</option>
+                        <option value="rawMark">Raw Mark</option>
+                        <option value="alignedMark">Aligned Mark</option>
+                        <option value="scaledMark">Scaled Mark</option>
+                        <option value="atarEquiv">Atar Equivalent</option>
+                    </select>
+                    <button class="generateGraph">Generate graph</button>
+                </div>
             </div>
-            <button class="generateGraph">Generate graph</button>
+            <button class="advmodetoggle">Toggle advanced mode</button>
         </div>
-        <canvas id="myChart" style="position: relative; height:50vh; width:70vw">
-            
-        </canvas>
+        <div style="position: relative; height:70vh; width:70vw">
+            <canvas id="myChart" style="position: relative; height:50vh; width:70vw"></canvas>
+        </div>
     </div>
 </body>
