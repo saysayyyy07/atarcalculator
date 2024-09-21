@@ -21,18 +21,16 @@ xAxisSelect.addEventListener("change", updateGraph);
 yAxisSelect.addEventListener("change", updateGraph);
 
 function updateGraph() {
+    lowerBoundInt = parseInt(lowerBound.value);
+    upperBoundInt = parseInt(upperBound.value);
+    if (lowerBoundInt >= upperBoundInt) lowerBound.value = upperBound.value - 1;
+    if (lowerBoundInt < 0) lowerBound.value = 0;
+    if (upperBoundInt > 100) upperBound.value = 100;
+
     xAxis = findAxis(xAxisSelect.value);
     yAxis = findAxis(yAxisSelect.value);
     if (xAxis == undefined) xAxis = calculateRawMarkArray();
     if (yAxis == undefined) yAxis = calculateAtarEquivArray();
-
-    console.log(yAxis)
-
-    lowerBoundInt = parseInt(lowerBound.value);
-    upperBoundInt = parseInt(upperBound.value);
-    if (lowerBoundInt >= upperBoundInt) return alert("Please ensure the lower bound < upper bound.");
-    if (lowerBoundInt < 0) return alert("Please ensure the lower bound >= 0");
-    if (upperBoundInt > 100) return alert ("Please ensure the upper bound is <= 100");
 
     let chartStatus = Chart.getChart("myChart")
     if (graphSubjectSelector.value == "") return;
@@ -62,7 +60,7 @@ function calculateRawMarkArray() {
 function calculateAlignedMarkArray() {
     let array = [];
     for (mark in calculateRawMarkArray()) {
-        array.push(rawToAlignedToScaled(graphSubjectSelector.value, mark)[1])
+        array.push(rawToAlignedToScaled(graphSubjectSelector.value, calculateRawMarkArray()[mark])[1])
     }
     return array;
 }
@@ -71,6 +69,7 @@ function calculateScaledMarkArray() {
     let array = [];
     for (mark in calculateRawMarkArray()) {
         array.push(rawToAlignedToScaled(graphSubjectSelector.value, calculateRawMarkArray()[mark])[2])
+        console.log(calculateRawMarkArray()[mark], rawToAlignedToScaled(graphSubjectSelector.value, calculateRawMarkArray()[mark])[2])
     }
     return array;
 }
@@ -129,8 +128,8 @@ function generateChart(xAxis, yAxis) {
               beginAtZero: true
             },
             y: {
-                min: Math.max(0, 99.95 - 1.1*range),
-                max: 100,
+                min: Math.max(0, yAxis[yAxis.length - 1] - 1.1*range),
+                max: Math.min(100, (yAxis[yAxis.length - 1])),
                 title: {
                     display: true,
                     text: yAxisSelect.options[yAxisSelect.selectedIndex].text,
