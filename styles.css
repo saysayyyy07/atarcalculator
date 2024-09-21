@@ -159,7 +159,7 @@ input:focus {
   
   .tooltip .tooltiptext {
     display: none;
-    width: 60vw;
+    width: 50vw;
     background-color: rgb(39, 39, 39);
     color: #fff;
     text-align: center;
