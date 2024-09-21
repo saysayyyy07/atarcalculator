@@ -11,16 +11,22 @@ advancedConfig.style.display = "none";
 const xAxisSelect = document.getElementById("xAxis");
 const yAxisSelect = document.getElementById("yAxis");
 
-let rawMarksArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100];
-let atarEquivArray = [];
+const rawMarksArray = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24, 25, 26, 27, 28, 29, 30, 31, 32, 33, 34, 35, 36, 37, 38, 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54, 55, 56, 57, 58, 59, 60, 61, 62, 63, 64, 65, 66, 67, 68, 69, 70, 71, 72, 73, 74, 75, 76, 77, 78, 79, 80, 81, 82, 83, 84, 85, 86, 87, 88, 89, 90, 91, 92, 93, 94, 95, 96, 97, 98, 99, 100];
+const atarEquivArray = [];
 
+lowerBound.addEventListener("input", updateGraph);
+upperBound.addEventListener("input", updateGraph);
+graphSubjectSelector.addEventListener("change", updateGraph);
+xAxisSelect.addEventListener("change", updateGraph);
+yAxisSelect.addEventListener("change", updateGraph);
 
-generateGraphButton.addEventListener("click", (e) => {
+function updateGraph() {
     xAxis = findAxis(xAxisSelect.value);
     yAxis = findAxis(yAxisSelect.value);
+    if (xAxis == undefined) xAxis = calculateRawMarkArray();
+    if (yAxis == undefined) yAxis = calculateAtarEquivArray();
 
-    console.log(xAxisSelect.options[xAxisSelect.selectedIndex].text)
-    console.log(yAxisSelect.options[yAxisSelect.selectedIndex].text)
+    console.log(yAxis)
 
     lowerBoundInt = parseInt(lowerBound.value);
     upperBoundInt = parseInt(upperBound.value);
@@ -29,35 +35,12 @@ generateGraphButton.addEventListener("click", (e) => {
     if (upperBoundInt > 100) return alert ("Please ensure the upper bound is <= 100");
 
     let chartStatus = Chart.getChart("myChart")
-    if (graphSubjectSelector.value == "") return alert ("Please select a subject before generating the graph.");
+    if (graphSubjectSelector.value == "") return;
     if (chartStatus == undefined) return;
     
     chartStatus.destroy();
     generateDataPoints(graphSubjectSelector.value, xAxis, yAxis);
-    
-});
-
-
-// [lowerBound, upperBound].forEach(function(element) {
-//     element.addEventListener("input", (e) => {
-//         let lowerBoundInt = parseInt(lowerBound.value);
-//         let upperBoundInt = parseInt(upperBound.value);
-
-//         if (lowerBoundInt >= upperBoundInt) return alert("Please ensure the lower bound < upper bound.");
-//         if (lowerBoundInt < 0) return alert("Please ensure the lower bound >= 0");
-//         if (upperBoundInt > 100) return alert ("Please ensure the upper bound is <= 100");
-//         calculateXBounds(lowerBoundInt, upperBoundInt);
-
-//         let chartStatus = Chart.getChart("myChart")
-//         if (graphSubjectSelector.value == "") return alert ("Please select a subject before generating the graph.");
-//         if (chartStatus == undefined) return;
-            
-//         chartStatus.destroy();
-//         generateDataPoints(graphSubjectSelector.value);
-//         }
-//     )
-// })
-
+}
 
 function findAxis(axis) {
     if (axis == "rawMark") return calculateRawMarkArray();
@@ -87,7 +70,7 @@ function calculateAlignedMarkArray() {
 function calculateScaledMarkArray() {
     let array = [];
     for (mark in calculateRawMarkArray()) {
-        array.push(rawToAlignedToScaled(graphSubjectSelector.value, mark)[2])
+        array.push(rawToAlignedToScaled(graphSubjectSelector.value, calculateRawMarkArray()[mark])[2])
     }
     return array;
 }
@@ -101,29 +84,23 @@ function calculateAtarEquivArray() {
     return array;
 }
 
-graphSubjectSelector.addEventListener("change", (e) => {
-    lowerBoundInt = parseInt(lowerBound.value);
-    upperBoundInt = parseInt(upperBound.value);
-    if (lowerBoundInt >= upperBoundInt) return alert("Please ensure the lower bound < upper bound.");
-    if (lowerBoundInt < 0) return alert("Please ensure the lower bound >= 0");
-    if (upperBoundInt > 100) return alert ("Please ensure the upper bound is <= 100");
-
-    let chartStatus = Chart.getChart("myChart")
-    if (graphSubjectSelector.value == "") return alert ("Please select a subject before generating the graph.");
-    if (chartStatus == undefined) return;
-    
-    chartStatus.destroy();
-    generateDataPoints(graphSubjectSelector.value);
-})
-
 advModeToggle.addEventListener("click", (e) => {
     if (advancedConfig.style.display == "none" ) advancedConfig.style.display = "block";
     else if (advancedConfig.style.display == "block") advancedConfig.style.display = "none";
 })
 
 function generateChart(xAxis, yAxis) {
-    console.log(xAxis)
-    console.log(yAxis)
+    if (xAxis === undefined) {
+        xAxis = calculateRawMarkArray();
+        xAxisSelect.options[xAxisSelect.selectedIndex].text = "Raw Mark"
+    }
+    if (yAxis === undefined ) {
+        yAxis = calculateAtarEquivArray();
+        yAxisSelect.options[yAxisSelect.selectedIndex].text = "Atar Equivalent"
+    }
+
+    let range = yAxis[yAxis.length - 1] - yAxis[0];
+
     new Chart(myChart, {
         type: 'line',
         data: {
@@ -152,7 +129,8 @@ function generateChart(xAxis, yAxis) {
               beginAtZero: true
             },
             y: {
-                min: Math.max(0, 100 - 1.125*(atarEquivArray[atarEquivArray.length - 1] - atarEquivArray[0])),
+                min: Math.max(0, 99.95 - 1.1*range),
+                max: 100,
                 title: {
                     display: true,
                     text: yAxisSelect.options[yAxisSelect.selectedIndex].text,
